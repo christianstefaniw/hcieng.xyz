@@ -1,0 +1,55 @@
+nav {
+    margin: auto;
+    max-width: 80%;
+    a {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: 0 1.7rem;
+    }
+    .mat-btn{
+        padding-left: 3.2rem;
+        padding-right: 3.2rem;
+        color: #ffffff !important;
+    }
+}
+
+.landing-title {
+    line-height: 1.4;
+}
+
+.circle-1 {
+    position: absolute;
+    z-index: -1;
+    top: 30%;
+    width: 26%;
+    left: 10%;
+}
+
+.circle-2 {
+    position: absolute;
+    z-index: -1;
+    top: 8%;
+    width: 26%;
+    right: 7%;
+}
+
+.landing-nav-buffer {
+    margin-top: 7rem;
+}
+
+@media screen and (max-width: 991px) {
+    .landing-nav-buffer {
+        margin-top: 2rem;
+    }
+
+    nav {
+        a {
+            margin: 0.5rem 0
+        }
+    }
+    
+    .intro-text {
+        margin-bottom: 4rem;
+    }
+}
