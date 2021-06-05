@@ -1,0 +1,64 @@
+.title {
+    font-size: 4rem;
+}
+.subtitle {
+    font-size: 24px;
+    color: #003ECB
+}
+
+.container {
+    min-width: 80%;
+}
+
+@mixin glow-line-properties {
+    position: absolute;
+    z-index: -1;
+}
+
+.glow-line-1 {
+    @include glow-line-properties;
+    top: 6%;
+    left: 35%;
+}
+
+.glow-line-2 {
+    @include glow-line-properties;
+    top: 15%;
+    left: 5%;
+}
+
+.glow-line-3 {
+    @include glow-line-properties;
+    top: 40%;
+    left: 25%;
+}
+
+.glow-line-4 {
+    @include glow-line-properties;
+    top: 70%;
+    left: 0%;
+}
+
+.glow-line-5 {
+    @include glow-line-properties;
+    top: 5%;
+    left: 70%;
+}
+
+.glow-line-6{
+    @include glow-line-properties;
+    top: 5%;
+    left: 50%;
+}
+
+.glow-line-7{
+    @include glow-line-properties;
+    top: 60%;
+    left: 50%;
+}
+
+.glow-line-8{
+    @include glow-line-properties;
+    top: 35%;
+    left: 85%;
+}
