@@ -60,11 +60,18 @@ nav {
     height: 100%;
     width: 100%;
     min-height: 355px;
+    margin: auto;
     line-height: 2;
 }
 
 .what-we-offer-card:hover {
     animation: blink 1.5s linear infinite;
+}
+
+@media screen and (max-width: 575px) {
+    .what-we-offer-card {
+        width: 85%;
+    }
 }
 
 @media screen and (max-width: 991px) {
