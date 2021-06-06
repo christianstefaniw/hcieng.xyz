@@ -44,7 +44,7 @@ class Home extends Component {
                     </div>
                     <Container>
                     <div style={{ marginTop: '11rem', marginBottom: '10rem' }}>
-                        <div className='w-100 text-center' style={{ marginBottom: '6rem' }}>
+                        <div className='w-100 text-center' style={{ marginBottom: '4rem' }}>
                             <p className='text-secondary mb-0'>Our Club</p>
                             <h2>What we offer?</h2>
                         </div>
