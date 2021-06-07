@@ -14,7 +14,7 @@ class TopNav extends Component {
                         src={ logo }
                         width="90"
                         height="79"
-                        className="d-inline-block align-top"
+                        className="d-inline-block align-top logo"
                         alt="HCI Eng"
                     />
                 </Navbar.Brand>

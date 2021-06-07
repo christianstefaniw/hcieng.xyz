@@ -15,6 +15,10 @@ nav {
     }
 }
 
+.container {
+    min-width: 80%
+}
+
 .landing-container {
     background: rgba(228, 228, 228, 0.23);
     border-radius: 40px;
@@ -24,6 +28,15 @@ nav {
 
 .landing-title {
     line-height: 1.4;
+}
+
+@keyframes spin {
+    from {transform:rotate(0deg);}
+    to {transform:rotate(360deg);}
+}
+
+.logo:hover {
+    animation: spin 3s linear infinite;
 }
 
 .circle-1 {
@@ -59,7 +72,7 @@ nav {
     padding: 1.3rem;
     height: 100%;
     width: 100%;
-    min-height: 355px;
+    height: 355px;
     margin: auto;
     line-height: 2;
 }
