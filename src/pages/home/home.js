@@ -38,7 +38,7 @@ class Home extends Component {
                                 </div>
                             </Col>
                             <Col lg={5}>
-                                <Image width='95%' src={landingcomputer} fluid />
+                                <Image width='90%' src={landingcomputer} fluid />
                             </Col>
                         </Row>
                         <div style={{ marginTop: '11rem', marginBottom: '10rem' }}>
