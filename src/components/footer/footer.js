@@ -7,24 +7,24 @@ import './footer.scss'
 class Footer extends Component {
     render() {
         return (
-            <div className='bg-dark py-5 mt-5'>
-                <Container className='text-white text-center'>
+            <div className='py-5 mt-5' style={{backgroundColor: '#F5F5F5'}}>
+                <Container className='text-muted text-center'>
                     <Row className='justify-content-center my-4'>
-                        <Col xl={1}>
+                        <Col xs={2}>
                             <a href="https://www.instagram.com/hci.eng">
                                 <div className="social-btn">
                                     <i class="fa-2x fab fa-instagram"></i>
                                 </div>
                             </a>
                         </Col>
-                        <Col xl={1}>
+                        <Col xs={2}>
                             <a href="https://github.com/hciengclub">
                                 <div className="social-btn">
                                     <i class="fa-2x fab fa-github"></i>
                                 </div>
                             </a>
                         </Col>
-                        <Col xl={1}>
+                        <Col xs={2}>
                             <a href="https://classroom.google.com/c/MzUwMzE5NzA3NjIw?cjc=yi5yzyj">
                                 <div className="social-btn">
                                     <i class="fa-2x fab fa-google"></i>
