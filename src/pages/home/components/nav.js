@@ -11,7 +11,7 @@ class TopNav extends Component {
             <Navbar bg="transparent" expand="lg">
                 <Navbar.Brand href="#home">
                     <img
-                        src={ logo }
+                        src={logo}
                         width="90"
                         height="79"
                         className="d-inline-block align-top logo"
@@ -21,11 +21,11 @@ class TopNav extends Component {
                 <Navbar.Toggle aria-controls="navbar-nav" />
                 <Navbar.Collapse id="navbar-nav">
                     <Nav className="w-100 justify-content-end">
-                        <a href="#honm">Home</a>
-                        <a href="#home">About</a>
-                        <a href="#honm">Schedule</a>
-                        <a href="#honm">Executives</a>
-                        <a href="#home" className="cta-btn-primary mat-btn">LOGIN</a>
+                        <a href='#home'>Home</a>
+                        <a href="#about">About</a>
+                        <a href='#execs'>Executives</a>
+                        <a href='#contact'>Contact</a>
+                        <a href="#login" className="cta-btn-primary mat-btn">LOGIN</a>
                     </Nav>
                 </Navbar.Collapse>
             </Navbar>
