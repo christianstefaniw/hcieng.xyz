@@ -21,6 +21,7 @@ class Contact extends Component {
                             <input placeholder='Name' type='text' className='contact-input' required />
                             <input placeholder='Email' type='text' className='contact-input my-4' required />
                             <textarea placeholder='Question' className='contact-input' required />
+                            <button className='cta-btn-primary w-100 mat-btn mt-4'>Send</button>
                         </form>
                     </Col>
                 </Row>
