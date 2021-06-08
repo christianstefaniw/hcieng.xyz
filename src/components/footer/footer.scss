@@ -1,0 +1,34 @@
+@import '../../utilities/variables';
+@import '../../utilities/common';
+
+.social-btn{
+	background: #ffffff;
+	height: 3.1rem;
+	width: 3.1rem;
+	border-radius: 1.5rem;
+	cursor: pointer;
+	align-items: center;
+	justify-content: center;
+	box-shadow: $outward-shadow;
+	position: relative;
+    margin: auto;
+    transition: 0.8s;
+}
+
+.social-btn:hover {
+    transition: 0.8s;
+    box-shadow: $inward-shadow;
+    i {
+        transition: 0.8s;
+        color: $secondary;
+    }
+}
+
+.social-btn i{
+  font-size: 1.75rem;
+  position: absolute;
+  top: 22%;
+  transition: 0.8s;
+  left: 24%;
+  color: #6c757d;
+}

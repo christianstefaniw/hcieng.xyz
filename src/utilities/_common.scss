@@ -1,0 +1,9 @@
+@import './variables';
+
+.inner-shadow {
+    box-shadow: $inward-shadow
+}
+
+.outward-shadow {
+    box-shadow: $outward-shadow
+}

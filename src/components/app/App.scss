@@ -1,7 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap');
-
-$primary: #173058;
-$secondary: #FF7F00;
+@import '../../utilities/variables';
+@import '../../utilities/common';
 
 * {
     font-family: "Fredoka One", serif;

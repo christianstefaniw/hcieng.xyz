@@ -13,10 +13,12 @@ class Contact extends Component {
             <>
                 <Title title='Contact us!' subtitle='Have a Question?' />
                 <Row className='justify-content-around'>
-                    <Col lg={4}>
-                        <Image className='mb-4' src={messageimg} fluid />
+                    <Col lg={4} className='mb-4'>
+                        <div className='inner-shadow rounded-circle overflow-hidden'>
+                            <Image className='mb-4 sidetoside' src={messageimg} fluid />
+                        </div>
                     </Col>
-                    <Col lg={6}>
+                    <Col lg={5}>
                         <form className='mb-5 contact-form'>
                             <input placeholder='Name' type='text' className='contact-input' required />
                             <input placeholder='Email' type='text' className='contact-input my-4' required />
