@@ -14,7 +14,7 @@ class Contact extends Component {
                 <Title title='Contact us!' subtitle='Have a Question?' />
                 <Row className='justify-content-around'>
                     <Col lg={4}>
-                        <Image src={messageimg} fluid />
+                        <Image className='mb-4' src={messageimg} fluid />
                     </Col>
                     <Col lg={6}>
                         <form className='mb-5 contact-form'>
