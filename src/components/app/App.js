@@ -6,7 +6,7 @@ import {
 } from "react-router-dom";
 
 import Home from '../../pages/home/home'
-
+import Login from '../../pages/login/login'
 import './App.scss';
 
 
@@ -15,8 +15,11 @@ class App extends Component {
     return (
       <Router>
         <Switch>
-          <Route path="/">
+          <Route exact path="/">
             <Home />
+          </Route>
+          <Route exact path="/login">
+            <Login />
           </Route>
         </Switch>
       </Router>

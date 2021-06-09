@@ -1,7 +1,7 @@
 import { Component } from 'react'
 import { Container } from "react-bootstrap";
 
-import TopNav from './components/nav'
+import TopNav from '../../components/nav/nav'
 import About from './components/about'
 import Landing from './components/landing'
 import Contact from './components/contact'
@@ -12,11 +12,11 @@ import './home.scss'
 class Home extends Component {
     render() {
         return (
-            <>
-                <TopNav />
+            <div id='home'>
+                <TopNav loggedin={false} />
                 <div className='nav-spacing-buffer' />
                 <Container>
-                    <section id='home'>
+                    <section >
                         <Landing />
                     </section>
                     <div className='spacing-buffer'></div>
@@ -25,11 +25,11 @@ class Home extends Component {
                     </section>
                     <div className='spacing-buffer'></div>
                     <section id='contact'>
-                        <Contact />
+                        <Contact start_loading={this.start_loading} stop_loading={this.stop_loading} />
                     </section>
                 </Container>
                 <Footer />
-            </>
+            </div>
         )
     }
 }

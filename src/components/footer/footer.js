@@ -13,21 +13,21 @@ class Footer extends Component {
                         <Col xs={2}>
                             <a href="https://www.instagram.com/hci.eng">
                                 <div className="social-btn">
-                                    <i class="fa-2x fab fa-instagram"></i>
+                                    <i className="fa-2x fab fa-instagram"></i>
                                 </div>
                             </a>
                         </Col>
                         <Col xs={2}>
                             <a href="https://github.com/hciengclub">
                                 <div className="social-btn">
-                                    <i class="fa-2x fab fa-github"></i>
+                                    <i className="fa-2x fab fa-github"></i>
                                 </div>
                             </a>
                         </Col>
                         <Col xs={2}>
                             <a href="https://classroom.google.com/c/MzUwMzE5NzA3NjIw?cjc=yi5yzyj">
                                 <div className="social-btn">
-                                    <i class="fa-2x fab fa-google"></i>
+                                    <i className="fa-2x fab fa-google"></i>
                                 </div>
                             </a>
                         </Col>
