@@ -28,16 +28,19 @@ class Home extends Component {
 
     render() {
         return (
-            <OnImagesLoaded onLoaded={this.stop_loading}>
-                <div className={this.state.loading ? 'invisible' : ''} >
-                    <div id='home'>
-                        <TopNav loggedin={false} />
-                        <div className='nav-spacing-buffer' />
+            <div id='home'>
+                <TopNav loggedin={false} />
+                <div className='nav-spacing-buffer' />
+                <Container>
+                    <section >
+                        <OnImagesLoaded onLoaded={this.stop_loading}>
+                            <Landing />
+                        </OnImagesLoaded>
+                    </section>
+                </Container>
+                {this.state.loading ? <></>:
+                    <>
                         <Container>
-                            <section >
-                                <Landing />
-                            </section>
-
                             <div className='spacing-buffer'></div>
                             <section id='about'>
                                 <About />
@@ -50,12 +53,11 @@ class Home extends Component {
                             <section id='contact'>
                                 <Contact />
                             </section>
-                            <Footer />
                         </Container>
-                    </div>
-                </div>
-
-            </OnImagesLoaded >
+                        <Footer />
+                    </>
+                }
+            </div>
 
         )
     }
