@@ -15,11 +15,14 @@
     transition: 0.8s;
 }
 
-.social-btn:hover {
-    transition: 0.8s;
+.social-btn:active {
+    transition: 0.5s;
     box-shadow: $inward-shadow;
+}
+
+.social-btn:hover{
     i {
-        transition: 0.8s;
+        transition: 0.5s;
         color: $secondary;
     }
 }

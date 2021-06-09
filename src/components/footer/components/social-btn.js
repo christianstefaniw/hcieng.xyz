@@ -3,7 +3,7 @@ import { Component } from 'react'
 class SocialBtn extends Component {
     render() {
         return (
-            <a rel="noreferrer" target='_blank' href={this.props.hred}>
+            <a target='_blank' rel='noreferrer' href={this.props.href}>
                 <div className="social-btn">
                     <i className={this.props.className}></i>
                 </div>
