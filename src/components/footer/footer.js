@@ -1,35 +1,31 @@
 import { Component } from 'react'
 import { Row, Col, Container } from 'react-bootstrap'
+import ScrollAnimation from 'react-animate-on-scroll';
+
+import SocialBtn from './components/social-btn'
 
 import './footer.scss'
-
 
 class Footer extends Component {
     render() {
         return (
-            <div className='py-5 mt-5' style={{backgroundColor: '#F5F5F5'}}>
+            <div className='py-5 mt-5' style={{ backgroundColor: '#F5F5F5' }}>
                 <Container className='text-muted text-center'>
                     <Row className='justify-content-center my-4'>
                         <Col xs={2}>
-                            <a href="https://www.instagram.com/hci.eng">
-                                <div className="social-btn">
-                                    <i className="fa-2x fab fa-instagram"></i>
-                                </div>
-                            </a>
+                            <ScrollAnimation animateIn='slideInLeft' animateOnce>
+                                <SocialBtn href='https://www.instagram.com/hci.eng' className='fa-2x fab fa-instagram' />
+                            </ScrollAnimation>
                         </Col>
                         <Col xs={2}>
-                            <a href="https://github.com/hciengclub">
-                                <div className="social-btn">
-                                    <i className="fa-2x fab fa-github"></i>
-                                </div>
-                            </a>
+                            <ScrollAnimation animateIn='slideInUp' animateOnce>
+                                <SocialBtn href='https://github.com/hciengclub' className='fa-2x fab fa-github' />
+                            </ScrollAnimation>
                         </Col>
                         <Col xs={2}>
-                            <a href="https://classroom.google.com/c/MzUwMzE5NzA3NjIw?cjc=yi5yzyj">
-                                <div className="social-btn">
-                                    <i className="fa-2x fab fa-google"></i>
-                                </div>
-                            </a>
+                            <ScrollAnimation animateIn='slideInRight' animateOnce>
+                                <SocialBtn href='https://classroom.google.com/c/MzUwMzE5NzA3NjIw?cjc=yi5yzyj' className='fa-2x fab fa-google' />
+                            </ScrollAnimation>s
                         </Col>
                     </Row>
                     <p>© Humerside CI Engineering Club. All rights reserved</p>

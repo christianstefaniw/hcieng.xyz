@@ -64,6 +64,12 @@
     box-shadow: $inward-shadow;
 }
 
+.exec-card {
+    background-color: #FFFFFF;
+    box-shadow: $outer-shadow;
+    padding: 5rem;
+}
+
 @mixin neumorph-input {
     width: 100%;
     background-color: #FFFFFF;

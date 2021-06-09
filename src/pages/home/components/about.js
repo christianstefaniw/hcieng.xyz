@@ -1,5 +1,6 @@
 import { Component } from 'react'
 import { Row, Col } from "react-bootstrap";
+import ScrollAnimation from 'react-animate-on-scroll';
 
 import WhatWeOfferCard from './what-we-offer-card'
 import Title from './title'
@@ -17,25 +18,31 @@ class About extends Component {
                 <Title title='What we offer?' subtitle='Our Club' mb='3.5rem' />
                 <Row className='justify-content-around'>
                     <Col className='mb-5' lg={3}>
-                        <WhatWeOfferCard
-                            icon={projecticon}
-                            title="Real World Projects"
-                            content="Build practical real world projects such as engines."
-                        />
+                        <ScrollAnimation animateIn='slideInLeft' animateOnce>
+                            <WhatWeOfferCard
+                                icon={projecticon}
+                                title="Real World Projects"
+                                content="Build practical real world projects such as engines."
+                            />
+                        </ScrollAnimation>
                     </Col>
                     <Col className='mb-5' lg={3}>
-                        <WhatWeOfferCard
-                            icon={presentationicon}
-                            title="STEM Presentations"
-                            content="Learn about STEM University programs and real world theory of engineering projects."
-                        />
+                        <ScrollAnimation animateIn='slideInUp' animateOnce>
+                            <WhatWeOfferCard
+                                icon={presentationicon}
+                                title="STEM Presentations"
+                                content="Learn about STEM University programs and real world theory of engineering projects."
+                            />
+                        </ScrollAnimation>
                     </Col>
                     <Col className='mb-5' lg={3}>
-                        <WhatWeOfferCard
-                            icon={speakersicon}
-                            title="Engineer Speakers"
-                            content="Talk to Engieering professionals about their field and experiences."
-                        />
+                        <ScrollAnimation animateIn='slideInRight' animateOnce>
+                            <WhatWeOfferCard
+                                icon={speakersicon}
+                                title="Engineer Speakers"
+                                content="Talk to Engieering professionals about their field and experiences."
+                            />
+                        </ScrollAnimation>
                     </Col>
                 </Row>
             </>

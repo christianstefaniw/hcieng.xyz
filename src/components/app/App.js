@@ -8,13 +8,24 @@ import {
 
 import Home from '../../pages/home/home'
 import Login from '../../pages/login/login'
+import Loader from '../loader/loader'
 import './App.scss';
 
 
 class App extends Component {
+  constructor() {
+    super()
+    this.state = { loading: true }
+  }
+
+  componentDidMount() {
+    this.setState({ loading: false })
+  }
+
   render() {
     return (
       <>
+        <Loader show={this.state.loading} />
         <Helmet>
           <title>HCI Eng</title>
           <meta name="description" content="Humberside's official engineering club! Join now!" />

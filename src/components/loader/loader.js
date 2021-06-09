@@ -7,7 +7,7 @@ class Loader extends Component {
     render() {
         return (
             <Modal centered contentClassName='loading-modal' show={this.props.show}>
-                <Spinner className='m-auto' variant={this.props.variant} animation="border" />
+                <Spinner className='m-auto' variant={this.props.variant ? this.props.variant : 'primary'} animation="border" />
             </Modal>
         )
     }
