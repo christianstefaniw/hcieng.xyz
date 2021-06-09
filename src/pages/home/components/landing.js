@@ -25,7 +25,12 @@ class Landing extends Component {
                                         </p>
                         </div>
                         <div className='mt-4'>
-                            <a href="#about" className="cta-btn-primary px-4 mat-btn">LEARN MORE</a>
+                            <a target='_blank' rel='noreferrer'
+                                href='https://classroom.google.com/c/MzUwMzE5NzA3NjIw?cjc=yi5yzyj'
+                                className='cta-btn-primary px-4 mat-btn'
+                            >
+                                JOIN NOW
+                            </a>
                         </div>
                     </Col>
                     <Col lg={5}>

@@ -65,7 +65,7 @@ class Contact extends Component {
                 <Modal centered contentClassName='loading-modal' onHide={this.reset_success_sent} show={this.state.success_sent === true || this.state.success_sent === false}>
                     <h1 className='text-center'>{this.state.success_sent ? 'Sent!' : 'Error'}</h1>
                 </Modal>
-                <Title title='Contact us!' subtitle='Have a Question?' />
+                <Title title='Contact us!' subtitle='Have a question?' />
                 <Row className='justify-content-around'>
                     <Col lg={4} className='mb-4'>
                         <div className='inner-shadow rounded-circle overflow-hidden'>

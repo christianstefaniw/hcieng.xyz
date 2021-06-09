@@ -25,7 +25,7 @@ class Footer extends Component {
                         <Col xs={2}>
                             <ScrollAnimation animateIn='slideInRight' animateOnce>
                                 <SocialBtn href='https://classroom.google.com/c/MzUwMzE5NzA3NjIw?cjc=yi5yzyj' className='fa-2x fab fa-google' />
-                            </ScrollAnimation>s
+                            </ScrollAnimation>
                         </Col>
                     </Row>
                     <p>© Humerside CI Engineering Club. All rights reserved</p>

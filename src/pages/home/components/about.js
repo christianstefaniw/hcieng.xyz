@@ -15,7 +15,7 @@ class About extends Component {
     render() {
         return (
             <>
-                <Title title='What we offer?' subtitle='Our Club' mb='3.5rem' />
+                <Title title='What we offer?' subtitle='Our club' mb='3.5rem' />
                 <Row className='justify-content-around'>
                     <Col className='mb-5' lg={3}>
                         <ScrollAnimation animateIn='slideInLeft' animateOnce>

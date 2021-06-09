@@ -1,11 +1,14 @@
 import { Component } from 'react'
 
 import ExecCard from './execs-card'
-
+import Title from './title'
 class Execs extends Component {
     render() {
         return (
-            <ExecCard />
+            <>
+                <Title title='Executives' subtitle='Meet the team!' />
+                <ExecCard />
+            </>
         );
     }
 }
