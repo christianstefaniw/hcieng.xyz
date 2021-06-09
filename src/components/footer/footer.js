@@ -32,7 +32,7 @@ class Footer extends Component {
                             </a>
                         </Col>
                     </Row>
-                    <p>© Humerside CI Engineer Club. All rights reserved</p>
+                    <p>© Humerside CI Engineering Club. All rights reserved</p>
                 </Container>
             </div>
         )
