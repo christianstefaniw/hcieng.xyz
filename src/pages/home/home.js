@@ -7,7 +7,6 @@ import About from './components/about'
 import Landing from './components/landing'
 import Contact from './components/contact'
 import Footer from '../../components/footer/footer'
-import Execs from './components/execs'
 
 import './home.scss'
 
