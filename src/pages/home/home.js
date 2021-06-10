@@ -45,10 +45,7 @@ class Home extends Component {
                             <section id='about'>
                                 <About />
                             </section>
-                            <div className='spacing-buffer'></div>
-                            <section id='execs'>
-                                <Execs />
-                            </section>
+                           
                             <div className='spacing-buffer'></div>
                             <section id='contact'>
                                 <Contact />
