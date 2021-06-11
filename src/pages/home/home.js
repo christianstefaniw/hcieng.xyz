@@ -7,6 +7,7 @@ import About from './components/about'
 import Landing from './components/landing'
 import Contact from './components/contact'
 import Footer from '../../components/footer/footer'
+import Execs from './components/execs'
 
 import './home.scss'
 
@@ -44,7 +45,10 @@ class Home extends Component {
                             <section id='about'>
                                 <About />
                             </section>
-                           
+                            <div className='spacing-buffer'></div>
+                           <section id='execs'>
+                               <Execs />
+                           </section>
                             <div className='spacing-buffer'></div>
                             <section id='contact'>
                                 <Contact />

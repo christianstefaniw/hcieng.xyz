@@ -61,13 +61,28 @@
 
 .what-we-offer-card:hover {
     transition: 1s;
-    box-shadow: $inward-shadow;
+    box-shadow: $inner-shadow;
 }
 
 .exec-card {
     background-color: #FFFFFF;
     box-shadow: $outer-shadow;
-    padding: 5rem;
+    padding: 2rem;
+    height: 100%;
+    border-radius: 0.8rem;
+
+    img-container{
+        width: 100%;
+    }
+
+    img{
+        width: 100%;
+        max-height: 13rem;
+        max-width: 13rem;
+        object-fit: cover;
+        border-radius: 1rem;
+        box-shadow: $outer-shadow;
+    }
 }
 
 @mixin neumorph-input {
@@ -77,7 +92,7 @@
     border: none;
     padding: 1.2rem;
     border-radius: 2rem;
-    box-shadow: $inward-shadow;
+    box-shadow: $inner-shadow;
 }
 
 @keyframes sidetoside {

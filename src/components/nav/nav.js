@@ -23,6 +23,7 @@ class TopNav extends Component {
                     <Nav className="w-100 justify-content-end">
                         <a href='/#home'>Home</a>
                         <a href="/#about">About</a>
+                        <a href="/#execs">Executives</a>
                         <a href='/#contact'>Contact</a>
                         {
                             this.props.loggedin ?
