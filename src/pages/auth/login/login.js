@@ -49,7 +49,6 @@ class Login extends Component {
                             <GoogleLogin
                                 clientId="835439685490-8j1kg7tk53vhflhp5n9ifmrs164mmbom.apps.googleusercontent.com"
                                 onSuccess={(response) => oauth_login_from_response(response, this.context.toggle_loggedin)}
-                                isSignedIn={true}
                             />
                         </div>
 

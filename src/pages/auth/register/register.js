@@ -56,7 +56,7 @@ class Register extends Component {
                                 clientId="835439685490-8j1kg7tk53vhflhp5n9ifmrs164mmbom.apps.googleusercontent.com"
                                 onSuccess={() => { }}
                                 buttonText='Sign up with Google'
-                                isSignedIn={true}
+                                cookiePolicy={'single_host_origin'}
                             />
                         </div>
 

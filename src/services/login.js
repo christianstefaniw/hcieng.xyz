@@ -3,7 +3,7 @@ import axios from 'axios';
 import { login_endpoint } from '../constants/api_constants'
 
 async function login(jwt) {
-    await axios.post(login_endpoint, {'jwt': jwt});
+    await axios.post(login_endpoint, {'jwt': jwt}, {withCredentials: true});
 }
 
 export default async function oauth_login_from_response(response, update_loggedin) {
