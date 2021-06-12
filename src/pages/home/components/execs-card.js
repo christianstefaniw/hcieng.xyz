@@ -13,7 +13,6 @@ class ExecCard extends Component {
                     <p className='text-muted'>{this.props.role}</p>
                     <p>{this.props.content}</p>
                 </div>
-
             </div>
         );
     }

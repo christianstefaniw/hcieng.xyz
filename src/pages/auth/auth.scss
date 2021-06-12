@@ -1,0 +1,61 @@
+@import '../../utilities/mixins';
+@import '../../utilities/variables';
+
+.auth-container > div{
+    margin: auto;
+    max-width: 30rem;
+}
+
+.auth-container {
+    margin-top: 1.5rem
+}
+
+.auth { 
+    input {
+        @include neumorph-input();
+        margin-bottom: 1.3rem
+    }
+
+    i {
+        font-size: 1.6rem;
+        margin: 0.8rem -3.5rem;
+        color: #808080;
+    }
+}
+
+.auth-text {
+    margin-left: 0.8rem;
+    margin-bottom: 1.2rem;
+}
+
+.strike {
+    display: block;
+    text-align: center;
+    overflow: hidden;
+    white-space: nowrap; 
+}
+
+.strike > span {
+    position: relative;
+    display: inline-block;
+}
+
+.strike > span:before,
+.strike > span:after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    width: 9999px;
+    height: 1px;
+    background: #808080;
+}
+
+.strike > span:before {
+    right: 100%;
+    margin-right: 15px;
+}
+
+.strike > span:after {
+    left: 100%;
+    margin-left: 15px;
+}

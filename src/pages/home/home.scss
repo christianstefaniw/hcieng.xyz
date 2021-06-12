@@ -1,5 +1,5 @@
 @import '../../utilities/variables';
-@import '../../utilities/common';
+@import '../../utilities/mixins';
 
 /*
 -7px -7px 20px 0px #fff9,
@@ -83,16 +83,6 @@
         border-radius: 1rem;
         box-shadow: $outer-shadow;
     }
-}
-
-@mixin neumorph-input {
-    width: 100%;
-    background-color: #FFFFFF;
-    outline: none;
-    border: none;
-    padding: 1.2rem;
-    border-radius: 2rem;
-    box-shadow: $inner-shadow;
 }
 
 @keyframes sidetoside {

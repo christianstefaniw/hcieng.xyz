@@ -41,10 +41,9 @@ class Contact extends Component {
 
     handle_change = (evt) => {
         const value = evt.target.value;
-        this.setState(prevState => ({
-            ...prevState,
+        this.setState({
             [evt.target.name]: value,
-        }))
+        })
     }
 
     handle_submit = async (evt) => {
@@ -77,7 +76,7 @@ class Contact extends Component {
                             <input onChange={this.handle_change} placeholder='Name' name='name' type='text' className='contact-input' required />
                             <input onChange={this.handle_change} placeholder='Email' name='from_email' type='email' className='contact-input my-4' required />
                             <textarea onChange={this.handle_change} placeholder='Message' name='message' className='contact-input' required />
-                            <button type='submit' className='cta-btn-primary w-100 mat-btn mt-4'>Send</button>
+                            <button type='submit' className='cta-btn-primary w-100 mat-btn mt-4 outer-shadow'>Send</button>
                         </form>
                     </Col>
                 </Row>

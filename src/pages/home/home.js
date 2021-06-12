@@ -29,7 +29,7 @@ class Home extends Component {
     render() {
         return (
             <div id='home'>
-                <TopNav loggedin={false} />
+                <TopNav />
                 <div className='nav-spacing-buffer' />
                 <Container>
                     <section >

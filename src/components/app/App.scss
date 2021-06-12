@@ -1,6 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap');
 @import '../../utilities/variables';
-@import '../../utilities/common';
+@import '../../utilities/mixins';
 
 * {
     font-family: "Fredoka One", serif;
@@ -88,4 +88,24 @@ body {
 
 .cta-btn-primary:hover {
     color: #ffffff !important;
+}
+
+.inner-shadow {
+    box-shadow: $inner-shadow
+}
+
+.outward-shadow {
+    box-shadow: $outward-shadow
+}
+
+.outer-shadow {
+    box-shadow: $outer-shadow;
+}
+
+.primary{
+    color: $primary;
+}
+
+.secondary {
+    color: $secondary;
 }
