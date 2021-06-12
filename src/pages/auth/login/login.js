@@ -6,12 +6,12 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import TopNav from '../../../components/nav/nav'
 import oauth_login_from_response from '../../../services/login'
-import LoggedinContext from '../../../providers/loggedin_provider'
+import AccountContext from '../../../providers/account_provider'
 
 import '../auth.scss'
 
 class Login extends Component {
-    static contextType = LoggedinContext;
+    static contextType = AccountContext;
     constructor() {
         super()
         this.state = {
@@ -48,7 +48,7 @@ class Login extends Component {
                         <div className='text-center'>
                             <GoogleLogin
                                 clientId="835439685490-8j1kg7tk53vhflhp5n9ifmrs164mmbom.apps.googleusercontent.com"
-                                onSuccess={(response) => oauth_login_from_response(response, this.context.toggle_loggedin)}
+                                onSuccess={(response) => oauth_login_from_response(response, this.context.add_account_info)}
                             />
                         </div>
 

@@ -9,28 +9,38 @@ import {
 import Home from '../../pages/home/home'
 import Login from '../../pages/auth/login/login'
 import Register from '../../pages/auth/register/register'
-import LoggedinContext from '../../providers/loggedin_provider'
+import Account from '../../pages/account/account'
+
+import AccountContext from '../../providers/account_provider'
 import Loader from '../loader/loader'
+import WithAuth from '../../middleware/with_auth'
+import { get_account_info } from '../../services/account'
 
 import './App.scss';
+
 
 class App extends Component {
   constructor() {
     super();
-
-    this.toggle_loggedin = () => {
-      console.log('ok')
-      this.setState(state => ({
-        loggedin:
-          !state.loggedin,
-      }))
+    this.add_account_info = (account) => {
+      this.setState({
+        account_info: account,
+      })
     };
 
     this.state = {
-      loading: false,
-      loggedin: false,
-      toggle_loggedin: this.toggle_loggedin,
+      loading: true,
+      account_info: null,
+      create_account_info: this.add_account_info,
     };
+  }
+
+  async componentDidMount() {
+    let account_info = await get_account_info();
+    if (account_info !== false) {
+      this.add_account_info(account_info);
+    }
+    this.setState({ loading: false })
   }
 
   render() {
@@ -43,21 +53,16 @@ class App extends Component {
               <meta name="description" content="Humberside's official engineering club! Join now!" />
               <meta name="keywords" content="hci, humberside, engineering club, engineering, humberside collegiate institute" />
             </Helmet>
-            <LoggedinContext.Provider value={this.state}>
+            <AccountContext.Provider value={this.state}>
               <Router>
                 <Switch>
-                  <Route exact path="/">
-                    <Home />
-                  </Route>
-                  <Route exact path="/login">
-                    <Login />
-                  </Route>
-                  <Route exact path="/register">
-                    <Register />
-                  </Route>
+                  <Route exact path="/" component={Home} />
+                  <Route exact path="/login" component={Login} />
+                  <Route exact path="/register" component={Register} />
+                  <Route exact path='/account' component={WithAuth(Account)} />
                 </Switch>
               </Router>
-            </LoggedinContext.Provider>
+            </AccountContext.Provider>
           </div>
         }
       </>
