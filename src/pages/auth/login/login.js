@@ -5,16 +5,10 @@ import { faEye } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import TopNav from '../../../components/nav/nav'
-import login from './services'
+import oauth_login_from_response from '../../../services/login'
 import LoggedinContext from '../../../providers/loggedin_provider'
 
 import '../auth.scss'
-
-const responseGoogle = (response, update_loggedin) => {
-    console.log(response.tokenId);
-    login(response.tokenId)
-    update_loggedin()
-}
 
 class Login extends Component {
     static contextType = LoggedinContext;
@@ -32,7 +26,7 @@ class Login extends Component {
     render() {
         return (
             <>
-                <TopNav loggedin={false} />
+                <TopNav />
                 <Container className='auth-container'>
                     <div>
                         <div className='auth-text'>
@@ -54,7 +48,7 @@ class Login extends Component {
                         <div className='text-center'>
                             <GoogleLogin
                                 clientId="835439685490-8j1kg7tk53vhflhp5n9ifmrs164mmbom.apps.googleusercontent.com"
-                                onSuccess={(response) => responseGoogle(response, this.context.toggle_loggedin)}
+                                onSuccess={(response) => oauth_login_from_response(response, this.context.toggle_loggedin)}
                                 isSignedIn={true}
                             />
                         </div>
