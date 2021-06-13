@@ -41,7 +41,7 @@ class Execs extends Component {
                                 img={christian}
                                 role='Co-President'
                                 name='Christian Stefaniw'
-                                content='Christian is a senior at HCI. He is very interested in computer programming. Christian hopes to achieve a computer science degree from UBC.'
+                                content='Christian is a senior at HCI. He is very interested in computer programming. Christian hopes to achieve a computer science degree from UBC. He also does all of the programming stuff here at HCI Eng.'
                             />
                         </ScrollAnimation>
                     </Col>

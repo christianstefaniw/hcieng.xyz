@@ -1,6 +1,6 @@
 import { Component } from 'react'
 import { Navbar, Nav } from 'react-bootstrap'
-import { Link } from 'react-router-dom'
+import { HashLink as Link } from 'react-router-hash-link';
 
 import AccountContext from '../../providers/account_provider'
 
@@ -10,7 +10,7 @@ import logo from '../../assets/logos/hci-eng-logo-transparent.png'
 
 class TopNav extends Component {
     static contextType = AccountContext;
-   
+
     render() {
         return (
             <Navbar bg="transparent" expand="lg">
@@ -32,9 +32,11 @@ class TopNav extends Component {
                         <Link to="/#execs">Executives</Link>
                         <Link to="/#contact">Contact</Link>
                         {
-                            this.context.account_info != null ?
-                                <Link to="/account" className="cta-btn-primary mat-btn">ACCOUNT</Link> :
-                                <Link to="/login" className="cta-btn-primary mat-btn">LOGIN</Link>
+                            this.props.signup ? <Link to="/register" className="cta-btn-primary mat-btn">SIGN UP</Link> :
+
+                                this.context.account_info !== null ?
+                                    <Link to="/account" className="cta-btn-primary mat-btn">ACCOUNT</Link> :
+                                    <Link to="/login" className="cta-btn-primary mat-btn">LOGIN</Link>
                         }
                     </Nav>
                 </Navbar.Collapse>

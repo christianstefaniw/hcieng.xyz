@@ -1,9 +1,10 @@
 import { Component } from 'react'
 import { Helmet } from "react-helmet";
 import {
-  BrowserRouter as Router,
+  Router,
   Switch,
   Route,
+  Redirect,
 } from "react-router-dom";
 
 import Home from '../../pages/home/home'
@@ -17,6 +18,7 @@ import WithAuth from '../../middleware/with_auth'
 import { get_account_info } from '../../services/account'
 
 import './App.scss';
+import history from '../../history';
 
 
 class App extends Component {
@@ -31,7 +33,7 @@ class App extends Component {
     this.state = {
       loading: true,
       account_info: null,
-      create_account_info: this.add_account_info,
+      add_account_info: this.add_account_info,
     };
   }
 
@@ -54,11 +56,15 @@ class App extends Component {
               <meta name="keywords" content="hci, humberside, engineering club, engineering, humberside collegiate institute" />
             </Helmet>
             <AccountContext.Provider value={this.state}>
-              <Router>
+              <Router history={history}>
                 <Switch>
                   <Route exact path="/" component={Home} />
-                  <Route exact path="/login" component={Login} />
-                  <Route exact path="/register" component={Register} />
+                  <Route exact path="/login">
+                    { this.state.account_info !== null ? <Redirect to='/account' /> : <Login /> }
+                  </Route>
+                  <Route exact path="/register">
+                    { this.state.account_info !== null ? <Redirect to='/account' /> : <Register /> }
+                  </Route>
                   <Route exact path='/account' component={WithAuth(Account)} />
                 </Switch>
               </Router>
