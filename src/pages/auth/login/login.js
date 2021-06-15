@@ -62,14 +62,16 @@ class Login extends Component {
             <>
                 <TopNav signup={true} />
                 <Loader show={this.state.loading} variant='secondary' />
-                <Container className='auth-container'>
+                <Container className='login-container'>
                     <div>
                         <div className='auth-text'>
                             <h3 className='mb-1'>LOGIN TO ENG CLUB</h3>
                             <p className='text-muted'>enter the eng community at humberside</p>
                         </div>
                         <form className='auth' action='' onSubmit={this.handle_submit} >
-                            <input onChange={this.handle_change} placeholder='email' name='email' type='email' required />
+                            <div>
+                                <input onChange={this.handle_change} placeholder='email' name='email' type='email' required />
+                            </div>
                             <div className='d-flex'>
                                 <input onChange={this.handle_change} placeholder='password' name='password' type={this.state.show_pass ? 'text' : 'password'} required />
                                 <i onClick={this.toggle_show_pass}><FontAwesomeIcon icon={faEye} /></i>

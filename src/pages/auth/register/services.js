@@ -7,7 +7,7 @@ import { AccountInfo } from '../../../services/account'
 export class OauthRegister {
     static async oauth_register_from_response(response, add_account_info) {
         let account = await OauthRegister._register(response.tokenId)
-        let accountObj = new AccountInfo(account.data.email)
+        let accountObj = AccountInfo.fromJson(account.data)
         add_account_info(accountObj)
     }
 
@@ -16,8 +16,14 @@ export class OauthRegister {
     }
 }
 
-export async function register(email, password, add_account_info) {
-    let account = await axios.post(standard_register_endpoint, { 'email': email, 'password': password }, { withCredentials: true });
-    let accountObj = new AccountInfo(account.data.email);
+export async function register(email, first_name, last_name, password, add_account_info) {
+    let data = {
+        'email': email,
+        'first': first_name,
+        'last': last_name,
+        'pass': password
+    }
+    let account = await axios.post(standard_register_endpoint, data, { withCredentials: true });
+    let accountObj = AccountInfo.fromJson(account.data);
     add_account_info(accountObj);
 }

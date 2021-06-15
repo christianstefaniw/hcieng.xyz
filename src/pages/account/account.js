@@ -12,6 +12,9 @@ class Account extends Component {
             <>
                 <TopNav />
                 <p>email: {this.context.account_info.email}</p>
+                <p>name: {this.context.account_info.first} {this.context.account_info.last}</p>
+
+                {this.context.account_info.is_admin ? <p>Welcome admin!</p> : <></>}
             </>
         )
     }

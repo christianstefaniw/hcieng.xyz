@@ -1,18 +1,26 @@
 @import '../../utilities/mixins';
 @import '../../utilities/variables';
 
-.auth-container > div{
+.register-container > div{
     margin: auto;
-    max-width: 30rem;
+    max-width: 37rem;
 }
 
-.auth-container {
-    margin-top: 1.5rem
+.login-container > div {
+    margin: auto;
+    max-width: 30rem;
 }
 
 .auth { 
     input {
         @include neumorph-input();
+    }
+
+    .row > .col-lg-6 {
+        margin-bottom: 0;
+    }
+
+    div {
         margin-bottom: 1.3rem
     }
 
