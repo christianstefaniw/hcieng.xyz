@@ -40,9 +40,9 @@ class Contact extends Component {
     }
 
     handle_change = (evt) => {
-        const value = evt.target.value;
+        const { value, name } = evt.target
         this.setState({
-            [evt.target.name]: value,
+            [name]: value,
         })
     }
 

@@ -1,0 +1,6 @@
+@import '../../utilities/variables';
+@import '../../utilities/mixins';
+
+input {
+    @include neumorph-input();
+}

@@ -19,33 +19,25 @@ class Login extends Component {
         super()
         this.state = {
             show_pass: false,
-            loading: false,
-            email: "",
-            password: "",
+            fields: {},
+            errors: {}
         }
-    }
-
-    start_loading = () => {
-        this.setState({
-            loading: true
-        })
-    }
-
-    stop_loading = () => {
-        this.setState({
-            loading: false
-        })
     }
 
     handle_change = (evt) => {
         const value = evt.target.value;
-        this.setState({
-            [evt.target.name]: value,
-        })
+        let fields = this.state.fields;
+        fields[evt.target.name] = value;
+        this.setState({ fields })
+    }
+
+    handle_validation = () => {
     }
 
     handle_submit = async (evt) => {
         evt.preventDefault();
+        if (!this.handle_validation())
+            return
         let { email, password } = this.state;
         this.start_loading();
         await login(email, password, this.context.add_account_info);
@@ -70,11 +62,15 @@ class Login extends Component {
                         </div>
                         <form className='auth' action='' onSubmit={this.handle_submit} >
                             <div>
-                                <input onChange={this.handle_change} placeholder='email' name='email' type='email' required />
+                                <input value={this.state.fields['email']} onChange={this.handle_change} placeholder='email' name='email' type='email' required />
+                                <span className='text-danger'>{this.state.errors['email']}</span>
                             </div>
-                            <div className='d-flex'>
-                                <input onChange={this.handle_change} placeholder='password' name='password' type={this.state.show_pass ? 'text' : 'password'} required />
-                                <i onClick={this.toggle_show_pass}><FontAwesomeIcon icon={faEye} /></i>
+                            <div>
+                                <div className='d-flex'>
+                                    <input value={this.state.fields['password']} onChange={this.handle_change} placeholder='password' name='password' type={this.state.show_pass ? 'text' : 'password'} required />
+                                    <i onClick={this.toggle_show_pass}><FontAwesomeIcon icon={faEye} /></i>
+                                </div>
+                                <span className='text-danger'>{this.state.errors['password']}</span>
                             </div>
                             <button type='submit' className='cta-btn-primary w-100 mat-btn outer-shadow'>Login</button>
                         </form>

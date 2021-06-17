@@ -11,6 +11,7 @@ import Home from '../../pages/home/home'
 import Login from '../../pages/auth/login/login'
 import Register from '../../pages/auth/register/register'
 import Account from '../../pages/account/account'
+import Chat from '../../pages/chat/chat'
 
 import AccountContext from '../../providers/account_provider'
 import Loader from '../loader/loader'
@@ -59,11 +60,12 @@ class App extends Component {
               <Router history={history}>
                 <Switch>
                   <Route exact path="/" component={Home} />
+                  <Route exact path="/chat/:id" component={WithAuth(Chat)} />
                   <Route exact path="/login">
-                    { this.state.account_info !== null ? <Redirect to='/account' /> : <Login /> }
+                    {this.state.account_info !== null ? <Redirect to='/account' /> : <Login />}
                   </Route>
                   <Route exact path="/register">
-                    { this.state.account_info !== null ? <Redirect to='/account' /> : <Register /> }
+                    {this.state.account_info !== null ? <Redirect to='/account' /> : <Register />}
                   </Route>
                   <Route exact path='/account' component={WithAuth(Account)} />
                 </Switch>

@@ -4,7 +4,7 @@ import { account_info_endpoint } from '../constants/api_constants'
 
 export async function get_account_info() {
     return await axios.get(account_info_endpoint, { withCredentials: true }).then(res => {
-        let account_info = AccountInfo.fromJson(res.data);
+        let account_info = AccountInfo.from_json(res.data);
         return account_info
     })
         .catch(function (_) { return false });
@@ -18,12 +18,12 @@ export class AccountInfo {
         this.is_admin = is_admin;
     }
 
-    static fromJson(json) {
+    static from_json(json) {
         return new AccountInfo(
-            json.email,
-            json.first,
-            json.last,
-            json.admin
+            json['email'],
+            json['first'],
+            json['last'],
+            json['admin']
         )
     }
 }

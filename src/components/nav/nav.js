@@ -31,6 +31,7 @@ class TopNav extends Component {
                         <Link to="/#about">About</Link>
                         <Link to="/#execs">Executives</Link>
                         <Link to="/#contact">Contact</Link>
+                        {this.context.account_info !== null ? <Link to="/chat/60ca58a68106e16d94efbdc6">Chat</Link> : <></>}
                         {
                             this.props.signup ? <Link to="/register" className="cta-btn-primary mat-btn">SIGN UP</Link> :
 
