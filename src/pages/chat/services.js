@@ -69,8 +69,6 @@ export async function room_data(id, bottom_bounds, update_num_msg_loaded) {
         update_num_msg_loaded(upper_bounds)
         return RoomData.from_json(res.data)
     }).catch(function (err) {
-        if (err.response.status === 400)
-            return false;
-        throw err
+        throw err;
     })
 }

@@ -15,7 +15,7 @@ class Message extends Component {
         return (
             <Row className='message'>
                 <Col lg={1}>
-                    <div className='message-icon v-center' style={{backgroundColor: colors[Math.floor(Math.random()*colors.length)]}}>
+                    <div className='message-icon' style={{backgroundColor: colors[Math.floor(Math.random()*colors.length)]}}>
                         <h4>{this.props.msg.sender.first[0].toUpperCase()}</h4>
                     </div>
                 </Col>

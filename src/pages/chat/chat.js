@@ -36,7 +36,8 @@ class ChatPage extends Component {
     }
 
     reset = () => {
-        this.state.ws.close();
+        if (this.state.ws_loaded && this.state.ws)
+            this.state.ws.close();
         this.setState({ error: '', ws_loaded: false, messages_loaded: false });
         this.num_msg_loaded = 0;
     }
@@ -46,16 +47,20 @@ class ChatPage extends Component {
     }
 
     update_room_messages = async () => {
+        let new_room_data;
+
         this.setState({
             load_overlay: true,
         })
-        let new_room_data = await room_data(this.props.match.params.id, this.num_msg_loaded, this.update_num_msg_loaded)
-        if (new_room_data !== false) {
+
+        try {
+            room_data = await room_data(this.props.match.params.id, this.num_msg_loaded, this.update_num_msg_loaded)
             let messages = new_room_data.messages.concat(this.state.curr_room.messages)
             new_room_data.messages = messages;
-        } else {
+        } catch (_) {
             new_room_data = this.state.curr_room;
         }
+
         this.setState({
             load_overlay: false,
             curr_room: new_room_data
@@ -63,7 +68,7 @@ class ChatPage extends Component {
     }
 
     connect = async () => {
-        if (this.state.ws_loaded)
+        if (this.state.ws_loaded && this.state.ws)
             this.state.ws.close();
 
         this.setState({
@@ -96,7 +101,7 @@ class ChatPage extends Component {
             this.setState({ curr_room });
         }
 
-        ws.onclose = () => {}
+        ws.onclose = () => { }
 
         this.setState({ curr_room })
         this.setState({
@@ -160,14 +165,19 @@ class ChatPage extends Component {
                                         curr_room={this.state.curr_room} update_room_messages={this.update_room_messages}
                                     />
                                     {
-                                        this.state.curr_room.admin_text_only && !this.context.account_info.is_admin
-                                            ?
-                                            <>You do not have permissions to text in this room</>
-                                            :
-                                            <input
-                                                value={this.state.curr_msg} name='curr_msg' type='text'
-                                                onKeyPress={this.handle_enter_input} onChange={this.handle_input_change} required
-                                            />
+                                        this.state.error ? <> </> :
+                                            this.state.curr_room.admin_text_only && !this.context.account_info.is_admin
+                                                ?
+                                                <>You do not have permissions to text in this room</>
+                                                :
+                                                <div className='d-flex'>
+                                                    <input
+                                                        placeholder='message'
+                                                        value={this.state.curr_msg} name='curr_msg' type='text'
+                                                        onKeyPress={this.handle_enter_input} onChange={this.handle_input_change} required
+                                                    />
+                                                    <i onClick={this.send_message} className="fa fa-paper-plane fa-2x send-icon"></i>
+                                                </div>
                                     }
                                 </Container>
                             </>
