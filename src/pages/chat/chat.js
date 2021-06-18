@@ -12,6 +12,7 @@ import Chat from './components/chat'
 import './chat.scss'
 import AccountContext from '../../providers/account_provider'
 
+// TODO refactor all of this
 
 class ChatPage extends Component {
     static contextType = AccountContext;

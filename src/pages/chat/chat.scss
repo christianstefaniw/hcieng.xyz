@@ -20,6 +20,7 @@ input {
 }
 
 .message-icon {
+    user-select: none;
     border-radius: 50%;
     height: 3rem;
     width: 3rem;
