@@ -3,7 +3,7 @@ import config from '../config'
 const auth = 'auth'
 const account = 'account'
 const chat = 'chat'
-const domain_name = config.DEBUG ? 'localhost:8080' : 'https://hcieng-server.herokuapp.com';
+const domain_name = config.DEBUG ? 'localhost:8080' : 'hcieng-server.herokuapp.com';
 export const base = config.DEBUG ? 'http://localhost:8080' : 'https://hcieng-server.herokuapp.com';
 export const email_endpoint = `${base}/email`;
 export const standard_register_endpoint = `${base}/${auth}/register`
