@@ -15,7 +15,16 @@ input {
 }
 
 .message {
-    margin: 1rem 0;
+    margin: 3rem 0;
+    line-height: 0.5;
+}
+
+.message-icon {
+    border-radius: 50%;
+    height: 3rem;
+    width: 3rem;
+    box-shadow: $outer-shadow;
+    text-align: center;
 }
 
 .chat{

@@ -4,18 +4,16 @@ import { Container } from 'react-bootstrap'
 import Loader from '../../components/loader/loader'
 
 import { websocket } from '../../constants/api_constants'
-import Messages from './components/messages'
 import { Message, room_data } from './services'
 import Rooms from './components/rooms'
 import { all_rooms } from './services'
+import Chat from './components/chat'
 
 import './chat.scss'
 import AccountContext from '../../providers/account_provider'
 
 
-// TODO REFACTOR THE LIVING SHIT OUTTA THIS
-
-class Chat extends Component {
+class ChatPage extends Component {
     static contextType = AccountContext;
 
     constructor(props) {
@@ -24,7 +22,6 @@ class Chat extends Component {
         this.num_msg_loaded = 0;
 
         this.state = {
-            loading: true,
             rooms_loaded: false,
             ws_loaded: false,
             ws: null,
@@ -34,12 +31,12 @@ class Chat extends Component {
             error: '',
             rooms: [],
             load_overlay: false,
-            load_non_rooms: false,
         }
     }
 
     reset = () => {
-        this.setState({ error: '', ws_loaded: false, messages_loaded: false, load_non_rooms: true });
+        this.state.ws.close();
+        this.setState({ error: '', ws_loaded: false, messages_loaded: false });
         this.num_msg_loaded = 0;
     }
 
@@ -65,6 +62,9 @@ class Chat extends Component {
     }
 
     connect = async () => {
+        if (this.state.ws_loaded)
+            this.state.ws.close();
+
         this.setState({
             rooms: await all_rooms(),
             rooms_loaded: true,
@@ -80,15 +80,13 @@ class Chat extends Component {
                 messages_loaded: true,
                 ws_loaded: true
             })
-            this.check_loading();
             return;
         }
 
         let ws = new WebSocket(`${websocket}/${this.props.match.params.id}`);
 
         ws.onopen = () => {
-            this.setState({ ws })
-            console.log('connected');
+            this.setState({ ws, ws_loaded: true })
         }
 
         ws.onmessage = (evt) => {
@@ -97,16 +95,12 @@ class Chat extends Component {
             this.setState({ curr_room });
         }
 
-        ws.onclose = () => {
-            console.log('disconnected');
-        }
+        ws.onclose = () => {}
 
         this.setState({ curr_room })
         this.setState({
             messages_loaded: true,
-            ws_loaded: true
         });
-        this.check_loading();
     }
 
     async componentDidMount() {
@@ -144,51 +138,35 @@ class Chat extends Component {
         }
     }
 
-    check_loading = () => {
-        let loaded = this.state.ws_loaded && this.state.messages_loaded && this.state.rooms_loaded;
-        this.setState({
-            loading: !loaded,
-            load_non_rooms: !loaded
-        })
-    }
-
     render() {
         return (
             <>
                 <Container className='m-auto mt-5'>
                     <Loader show={this.state.load_overlay} />
                     {
-                        this.state.loading
+                        this.state.rooms_loaded ? <Rooms rooms={this.state.rooms} /> : <></>
+                    }
+                    {
+                        !this.state.ws_loaded && !this.state.messages_loaded
                             ?
-                            <Loader show={this.state.loading} />
+                            <Loader show={!this.state.ws_loaded && !this.state.messages_loaded} />
                             :
                             <>
-                                <Rooms rooms={this.state.rooms} />
-                                <Container key={this.props.match.params.id} className='chat'>
-                                    <div className='messages-container'>
-                                        {
-                                            this.state.load_non_rooms
-                                                ?
-                                                <Loader show={this.state.loading} />
-                                                :
-                                                <>
-                                                    {
-                                                        this.state.error
-                                                            ?
-                                                            <p className='text-danger'>{this.state.error}</p>
-                                                            :
-                                                            <Messages messages={this.state.curr_room.messages} update_messages={this.update_room_messages} />
-                                                    }
-                                                </>
-
-                                        }
-                                    </div>
+                                <Container className='chat'>
+                                    <Chat
+                                        id={this.props.match.params.id}
+                                        error={this.state.error}
+                                        curr_room={this.state.curr_room} update_room_messages={this.update_room_messages}
+                                    />
                                     {
                                         this.state.curr_room.admin_text_only && !this.context.account_info.is_admin
                                             ?
                                             <>You do not have permissions to text in this room</>
                                             :
-                                            <input value={this.state.curr_msg} name='curr_msg' type='text' onKeyPress={this.handle_enter_input} onChange={this.handle_input_change} required />
+                                            <input
+                                                value={this.state.curr_msg} name='curr_msg' type='text'
+                                                onKeyPress={this.handle_enter_input} onChange={this.handle_input_change} required
+                                            />
                                     }
                                 </Container>
                             </>
@@ -201,4 +179,4 @@ class Chat extends Component {
     }
 }
 
-export default Chat
+export default ChatPage

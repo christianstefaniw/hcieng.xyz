@@ -15,6 +15,11 @@ class Rooms extends Component {
         };
     }
 
+    shouldComponentUpdate(prevProps, prevState) {
+        return this.props.rooms !== prevProps.rooms || prevState.sidebar_open !== this.state.sidebar_open;
+    }
+
+
     toggle_sidebar = () => {
         this.setState(prev_state => ({ sidebar_open: !prev_state.sidebar_open }))
     }

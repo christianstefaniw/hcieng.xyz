@@ -1,6 +1,10 @@
 import { Component } from 'react'
 
+import Message from './message'
+
 import '../chat.scss'
+import { Container } from 'react-bootstrap';
+
 
 class Messages extends Component {
     constructor() {
@@ -26,6 +30,7 @@ class Messages extends Component {
         const top = el.target.scrollTop === 0;
         if (top) {
             this.at_top = true;
+            
             await this.props.update_messages();
         } else {
             this.at_top = false;
@@ -34,17 +39,14 @@ class Messages extends Component {
 
     render() {
         return (
-            <div onScroll={this.handle_scroll}>
-                <div>
+            <div className='messages-container' onScroll={this.handle_scroll}>
+                <Container ref={el => { this.el = el }}>
                     {
                         this.props.messages.map((msg, key) => (
-                            <div key={key} className='message' ref={el => { this.el = el }}>
-                                <p>{msg.sender.first}</p>
-                                <p>{msg.content}</p>
-                            </div>
+                            <Message key={key} msg={msg} />
                         ))
                     }
-                </div>
+                </Container>
             </div>
 
         )
