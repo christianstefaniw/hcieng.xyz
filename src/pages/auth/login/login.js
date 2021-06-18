@@ -20,8 +20,21 @@ class Login extends Component {
         this.state = {
             show_pass: false,
             fields: {},
-            errors: {}
+            errors: {},
+            loading: false,
         }
+    }
+
+    start_loading = () => {
+        this.setState({
+            loading: true
+        })
+    }
+
+    stop_loading = () => {
+        this.setState({
+            loading: false
+        })
     }
 
     handle_change = (evt) => {
@@ -32,13 +45,14 @@ class Login extends Component {
     }
 
     handle_validation = () => {
+        return true;
     }
 
     handle_submit = async (evt) => {
         evt.preventDefault();
         if (!this.handle_validation())
             return
-        let { email, password } = this.state;
+        let { email, password } = this.state.fields;
         this.start_loading();
         await login(email, password, this.context.add_account_info);
         this.stop_loading();

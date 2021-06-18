@@ -7,6 +7,7 @@ import AccountContext from '../../providers/account_provider'
 import './nav.scss'
 
 import logo from '../../assets/logos/hci-eng-logo-transparent.png'
+import config from '../../config';
 
 class TopNav extends Component {
     static contextType = AccountContext;
@@ -31,7 +32,7 @@ class TopNav extends Component {
                         <Link to="/#about">About</Link>
                         <Link to="/#execs">Executives</Link>
                         <Link to="/#contact">Contact</Link>
-                        {this.context.account_info !== null ? <Link to="/chat/60ca58a68106e16d94efbdc6">Chat</Link> : <></>}
+                        {this.context.account_info !== null ? <Link to={`/chat/${config.HCI_ENG_ROOM_ID}`}>Chat</Link> : <></>}
                         {
                             this.props.signup ? <Link to="/register" className="cta-btn-primary mat-btn">SIGN UP</Link> :
 

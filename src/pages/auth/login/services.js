@@ -7,7 +7,7 @@ import { AccountInfo } from '../../../services/account'
 export class OauthLogin {
     static async oauth_login_from_response(response, add_account_info) {
         let account = await OauthLogin._login(response.tokenId)
-        let accountObj = AccountInfo.fromJson(account.data)
+        let accountObj = AccountInfo.from_json(account.data)
         add_account_info(accountObj)
     }
 
@@ -18,6 +18,6 @@ export class OauthLogin {
 
 export async function login(email, password, add_account_info) {
     let account = await axios.post(standard_login_endpoint, { 'email': email, 'pass': password }, { withCredentials: true });
-    let accountObj = AccountInfo.fromJson(account.data);
+    let accountObj = AccountInfo.from_json(account.data);
     add_account_info(accountObj);
 }

@@ -4,3 +4,38 @@
 input {
     @include neumorph-input();
 }
+
+.sidebar{
+    background-color: $primary !important;
+}
+
+.messages-container {
+    overflow-y: scroll;
+    height: 100%;
+}
+
+.message {
+    margin: 1rem 0;
+}
+
+.chat{
+    height: 80vh !important;
+}
+
+@media screen and (max-width: 850px) {
+    .chat {
+        margin-left: 64px !important;
+    }
+}
+
+@media screen and (max-width: 766px) {
+    .chat {
+        margin-left: 0 !important;
+    }
+}
+
+@media screen and (max-width: 650px) {
+    .chat {
+        margin-left: 64px !important;
+    }
+}
