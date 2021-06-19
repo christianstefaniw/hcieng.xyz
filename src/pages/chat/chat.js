@@ -4,9 +4,8 @@ import { Col, Container, Row } from 'react-bootstrap'
 import Loader from '../../components/loader/loader'
 
 import { websocket } from '../../constants/api_constants'
-import { Message, room_data } from './services'
 import Rooms from './components/rooms'
-import { all_rooms } from './services'
+import { Message, room_data, all_rooms, LoadingHelpers, LoadingStatusEnum } from './services'
 import Chat from './components/chat'
 
 import './chat.scss'
@@ -23,11 +22,9 @@ class ChatPage extends Component {
         this.num_msg_loaded = 0;
 
         this.state = {
-            rooms_loaded: false,
-            ws_loaded: false,
+            loading: LoadingStatusEnum.none_loaded,
             ws: null,
             curr_room: null,
-            messages_loaded: false,
             curr_msg: '',
             error: '',
             rooms: [],
@@ -36,9 +33,9 @@ class ChatPage extends Component {
     }
 
     reset = () => {
-        if (this.state.ws_loaded && this.state.ws)
+        if (() => LoadingHelpers.check_rooms_loaded(this.state.loading))
             this.state.ws.close();
-        this.setState({ error: '', ws_loaded: false, messages_loaded: false });
+        this.setState({ error: '', loading: LoadingHelpers.unload_ws_and_messages() });
         this.num_msg_loaded = 0;
     }
 
@@ -68,31 +65,33 @@ class ChatPage extends Component {
     }
 
     connect = async () => {
+        let curr_room;
+
         if (this.state.ws_loaded && this.state.ws)
             this.state.ws.close();
 
-        this.setState({
-            rooms: await all_rooms(),
-            rooms_loaded: true,
-        })
-
-        let curr_room;
+        let loaded_rooms = await all_rooms();
+        this.setState(prev_state => ({
+            rooms: loaded_rooms,
+            loading: LoadingHelpers.rooms_loaded(prev_state.loading)
+        }));
 
         try {
             curr_room = await room_data(this.props.match.params.id, this.num_msg_loaded, this.update_num_msg_loaded)
         } catch (err) {
+            let loading_state = LoadingHelpers.ws_loaded(this.state.loading)
+            loading_state = LoadingHelpers.messages_loaded(loading_state)
             this.setState({
                 error: 'invalid room',
-                messages_loaded: true,
-                ws_loaded: true
-            })
+                loading: loading_state
+            });
             return;
         }
 
         let ws = new WebSocket(`${websocket}/${this.props.match.params.id}`);
 
         ws.onopen = () => {
-            this.setState({ ws, ws_loaded: true })
+            this.setState(prev_state => ({ ws, loading: LoadingHelpers.ws_loaded(prev_state.loading) }))
         }
 
         ws.onmessage = (evt) => {
@@ -104,9 +103,8 @@ class ChatPage extends Component {
         ws.onclose = () => { }
 
         this.setState({ curr_room })
-        this.setState({
-            messages_loaded: true,
-        });
+        this.setState(prev_state => ({ loading: LoadingHelpers.messages_loaded(prev_state.loading) }))
+
     }
 
     async componentDidMount() {
@@ -150,12 +148,12 @@ class ChatPage extends Component {
                 <Container className='m-auto mt-5'>
                     <Loader show={this.state.load_overlay} />
                     {
-                        this.state.rooms_loaded ? <Rooms rooms={this.state.rooms} /> : <></>
+                        LoadingHelpers.check_rooms_loaded(this.state.loading) ? <Rooms rooms={this.state.rooms} /> : <></>
                     }
                     {
-                        !this.state.ws_loaded && !this.state.messages_loaded
+                        !LoadingHelpers.fully_loaded(this.state.loading)
                             ?
-                            <Loader show={!this.state.ws_loaded && !this.state.messages_loaded} />
+                            <Loader show={() => !LoadingHelpers.fully_loaded(this.state.loading)} />
                             :
                             <>
                                 <Container className='chat'>

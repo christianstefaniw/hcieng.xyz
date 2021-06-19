@@ -72,3 +72,81 @@ export async function room_data(id, bottom_bounds, update_num_msg_loaded) {
         throw err;
     })
 }
+
+export const LoadingStatusEnum = {
+    "websocket_loaded": 1, "rooms_loaded": 2, "messages_loaded": 3,
+    "ws_and_rooms_loaded": 4, "ws_and_messages_loaded": 5,
+    "rooms_and_messages_loaded": 6, "loaded": 7, "none_loaded": 8
+};
+Object.freeze(LoadingStatusEnum)
+
+
+export class LoadingHelpers {
+    static check_rooms_loaded(loading_state) {
+        return loading_state === LoadingStatusEnum.rooms_loaded ||
+            loading_state === LoadingStatusEnum.ws_and_rooms_loaded ||
+            loading_state === LoadingStatusEnum.rooms_and_messages_loaded ||
+            loading_state === LoadingStatusEnum.loaded
+    }
+
+    static check_ws_loaded(loading_state) {
+        return loading_state === LoadingStatusEnum.ws_loaded ||
+            loading_state === LoadingStatusEnum.ws_and_rooms_loaded ||
+            loading_state === LoadingStatusEnum.ws_and_rooms_loaded.ws_and_messages_loaded ||
+            loading_state === LoadingStatusEnum.loaded
+    }
+
+    static messages_loaded(loading_state) {
+        switch (loading_state) {
+            case LoadingStatusEnum.websocket_loaded:
+                return LoadingStatusEnum.ws_and_messages_loaded;
+            case LoadingStatusEnum.rooms_loaded:
+                return LoadingStatusEnum.rooms_and_messages_loaded;
+            case LoadingStatusEnum.loaded:
+                return LoadingStatusEnum.loaded;
+            case LoadingStatusEnum.none_loaded:
+                return LoadingStatusEnum.messages_loaded;
+            default:
+                return loading_state;
+        }
+    }
+
+    static ws_loaded(loading_state) {
+        switch (loading_state) {
+            case LoadingStatusEnum.rooms_loaded:
+                return LoadingStatusEnum.ws_and_rooms_loaded;
+            case LoadingStatusEnum.messages_loaded:
+                return LoadingStatusEnum.ws_and_messages_loaded;
+            case LoadingStatusEnum.rooms_and_messages_loaded:
+                return LoadingStatusEnum.loaded;
+            case LoadingStatusEnum.none_loaded:
+                return LoadingStatusEnum.ws_loaded;
+            default:
+                return loading_state
+        }
+    }
+
+    static rooms_loaded(loading_state) {
+        switch (loading_state) {
+            case LoadingStatusEnum.ws_loaded:
+                return LoadingStatusEnum.ws_and_rooms_loaded;
+            case LoadingStatusEnum.messages_loaded:
+                return LoadingStatusEnum.ws_and_messages_loaded;
+            case LoadingStatusEnum.ws_and_messages_loaded:
+                return LoadingStatusEnum.loaded;
+            case LoadingStatusEnum.none_loaded:
+                return LoadingStatusEnum.rooms_loaded;
+            default:
+                return loading_state
+        }
+    }
+
+    static unload_ws_and_messages() {
+        return LoadingStatusEnum.rooms_loaded;
+    }
+
+    static fully_loaded(loading_state) {
+        return loading_state === LoadingStatusEnum.loaded;
+    }
+}
+
