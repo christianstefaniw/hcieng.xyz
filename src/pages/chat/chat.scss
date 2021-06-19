@@ -8,6 +8,7 @@ textarea {
 .sidebar{
     position: fixed !important;
     overflow-y: auto;
+    overflow-x: hidden !important;
     background-color: $primary !important;
 }
 
