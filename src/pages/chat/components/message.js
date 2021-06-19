@@ -21,7 +21,7 @@ class Message extends Component {
                 </Col>
                 <Col lg={11}>
                     <div>
-                        <p className='text-muted'>{this.props.msg.sender.first}</p>
+                        <p className='text-muted mb-0'>{this.props.msg.sender.first}</p>
                         <p>{this.props.msg.content}</p>
                     </div>
                 </Col>

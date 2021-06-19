@@ -1,5 +1,5 @@
 import { Component } from 'react'
-import { Container } from 'react-bootstrap'
+import { Col, Container, Row } from 'react-bootstrap'
 
 import Loader from '../../components/loader/loader'
 
@@ -170,14 +170,18 @@ class ChatPage extends Component {
                                                 ?
                                                 <>You do not have permissions to text in this room</>
                                                 :
-                                                <div className='d-flex'>
-                                                    <input
-                                                        placeholder='message'
-                                                        value={this.state.curr_msg} name='curr_msg' type='text'
-                                                        onKeyPress={this.handle_enter_input} onChange={this.handle_input_change} required
-                                                    />
-                                                    <i onClick={this.send_message} className="fa fa-paper-plane fa-2x send-icon"></i>
-                                                </div>
+                                                <Row>
+                                                    <Col lg={11}>
+                                                        <textarea
+                                                            placeholder='message'
+                                                            value={this.state.curr_msg} name='curr_msg' type='text'
+                                                            onKeyPress={this.handle_enter_input} onChange={this.handle_input_change} required
+                                                        />
+                                                    </Col>
+                                                    <Col lg={1}>
+                                                        <i onClick={this.send_message} className="fa fa-paper-plane fa-2x v-center send-icon"></i>
+                                                    </Col>
+                                                </Row>
                                     }
                                 </Container>
                             </>

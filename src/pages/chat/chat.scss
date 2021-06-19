@@ -1,17 +1,22 @@
 @import '../../utilities/variables';
 @import '../../utilities/mixins';
 
-input {
+textarea {
     @include neumorph-input();
 }
 
 .sidebar{
+    position: fixed !important;
+    overflow-y: auto;
     background-color: $primary !important;
 }
 
 .send-icon{
-    margin-top: 0.8rem;
-    margin-left: -4rem;
+    border-radius: 1.2rem;
+    background-color: $primary;
+    color: #fff;
+    height: 100%;
+    width: 100%;
     cursor: pointer;
 }
 
@@ -23,7 +28,7 @@ input {
 
 .message {
     margin: 3rem 0;
-    line-height: 0.5;
+    line-height: 1.5;
 }
 
 .message-icon {
@@ -38,23 +43,22 @@ input {
 
 .chat{
     height: 80vh !important;
+    bottom: 0;
 }
 
 @media screen and (max-width: 991px) {
     .message-icon {
         margin-bottom: 1rem;
     }
-}
-
-@media screen and (max-width: 850px) {
-    .chat {
-        margin-left: 64px !important;
+    .send-icon {
+        margin-top: 0.5rem;
+        padding: 1rem 0;
     }
 }
 
-@media screen and (max-width: 766px) {
+@media screen and (max-width: 810px) {
     .chat {
-        margin-left: 0 !important;
+        max-width: 5rem !important;
     }
 }
 

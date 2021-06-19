@@ -32,7 +32,7 @@ class Rooms extends Component {
                         this.setState({ sidebar_open: false });
                     }}
                 >
-                    <SideNav className='sidebar' expanded={this.state.sidebar_open} onSelect={(selected) => {
+                    <SideNav className='sidebar h-100' expanded={this.state.sidebar_open} onSelect={(selected) => {
                         if (selected === 'exit') {
                             history.push('/');
                             return
