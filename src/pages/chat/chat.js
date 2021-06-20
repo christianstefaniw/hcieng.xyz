@@ -1,5 +1,5 @@
 import { Component } from 'react'
-import { Col, Container, Row } from 'react-bootstrap'
+import { Container, Row, Col } from 'react-bootstrap'
 
 import Loader from '../../components/loader/loader'
 
@@ -100,8 +100,6 @@ class ChatPage extends Component {
             this.setState({ curr_room });
         }
 
-        ws.onclose = () => { }
-
         this.setState({ curr_room })
         this.setState(prev_state => ({ loading: LoadingHelpers.messages_loaded(prev_state.loading) }))
 
@@ -142,6 +140,10 @@ class ChatPage extends Component {
         }
     }
 
+    componentWillUnmount() {
+        this.reset();
+    }
+
     render() {
         return (
             <>
@@ -168,18 +170,20 @@ class ChatPage extends Component {
                                                 ?
                                                 <>You do not have permissions to text in this room</>
                                                 :
-                                                <Row>
-                                                    <Col lg={11}>
+                                                <Row className='justify-content-around'>
+                                                    <Col xs={9}>
                                                         <textarea
+                                                            className='message-type'
                                                             placeholder='message'
                                                             value={this.state.curr_msg} name='curr_msg' type='text'
                                                             onKeyPress={this.handle_enter_input} onChange={this.handle_input_change} required
                                                         />
                                                     </Col>
-                                                    <Col lg={1}>
-                                                        <i onClick={this.send_message} className="fa fa-paper-plane fa-2x v-center send-icon"></i>
+                                                    <Col xs={3}>
+                                                        <i onClick={this.send_message} className="fa fa-paper-plane fa-lg v-center send-icon"></i>
                                                     </Col>
                                                 </Row>
+
                                     }
                                 </Container>
                             </>

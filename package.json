@@ -9,7 +9,6 @@
     "@testing-library/jest-dom": "^5.13.0",
     "@testing-library/react": "^11.2.7",
     "@testing-library/user-event": "^12.8.3",
-    "@trendmicro/react-sidenav": "^0.5.0",
     "axios": "^0.21.1",
     "bootstrap": "^5.0.1",
     "node-sass": "^6.0.0",
@@ -26,6 +25,7 @@
     "react-router-dom": "^5.2.0",
     "react-router-hash-link": "^2.4.3",
     "react-scripts": "4.0.3",
+    "react-sidebar": "^3.0.2",
     "web-vitals": "^1.1.2"
   },
   "scripts": {

@@ -9,3 +9,10 @@
     border-radius: 2rem;
     box-shadow: $inner-shadow;
 }
+
+
+@mixin v-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

@@ -1,17 +1,20 @@
 import React, { Component } from 'react'
-import SideNav, { NavItem, NavText, NavIcon } from '@trendmicro/react-sidenav';
-import ClickOutside from 'react-click-outside'
+import Sidebar from "react-sidebar";
 
 import '../chat.scss'
-import '@trendmicro/react-sidenav/dist/react-sidenav.css';
 
 import history from '../../../history'
+import { Col, Row } from 'react-bootstrap';
+
+
+const mql = window.matchMedia(`(min-width: 800px)`);
 
 class Rooms extends Component {
     constructor() {
         super();
         this.state = {
-            sidebar_open: false
+            sidebar_open: false,
+            sidebar_docked: mql.matches,
         };
     }
 
@@ -24,50 +27,78 @@ class Rooms extends Component {
         this.setState(prev_state => ({ sidebar_open: !prev_state.sidebar_open }))
     }
 
+    componentDidMount = () => {
+        mql.addEventListener('', this.media_query_changed)
+    }
+
+    componentWillUnmount = () => {
+        mql.removeEventListener('', this.media_query_changed)
+    }
+
+    media_query_changed = () => {
+        this.setState({ sidebar_docked: mql.matches, sidebar_open: false })
+    }
+
+
     render() {
         return (
             <>
-                <ClickOutside
-                    onClickOutside={() => {
-                        this.setState({ sidebar_open: false });
-                    }}
-                >
-                    <SideNav className='sidebar h-100' expanded={this.state.sidebar_open} onSelect={(selected) => {
-                        if (selected === 'exit') {
-                            history.push('/');
-                            return
-                        }
-                        history.push(selected);
-                        this.setState({ sidebar_open: false });
-                    }}
-                        onToggle={(expanded) => this.setState({ sidebar_open: expanded })}
-                    >
-                        <SideNav.Toggle />
-                        <SideNav.Nav defaultSelected="">
-                            {
-                                this.props.rooms.map((room, key) => (
-                                    <NavItem key={key} eventKey={room.id}>
-                                        <NavIcon>
-                                            <i className={room.name === 'Announcements' ? 'fas fa-bullhorn lg' : 'fas fa-comment fa-lg'} />
-                                        </NavIcon>
-                                        <NavText>
-                                            {room.name}
-                                        </NavText>
-                                    </NavItem>
 
-                                ))
-                            }
-                            <NavItem eventKey="exit">
-                                <NavIcon>
-                                    <i className="fas fa-arrow-left fa-lg" />
-                                </NavIcon>
-                                <NavText>
-                                    EXIT
-                                </NavText>
-                            </NavItem>
-                        </SideNav.Nav>
-                    </SideNav>
-                </ClickOutside>
+                <Sidebar
+                    sidebarClassName='bg-white'
+                    sidebar={<SidebarContent rooms={this.props.rooms} toggle={this.toggle_sidebar} />}
+                    open={this.state.sidebar_open}
+                    onSetOpen={this.toggle_sidebar}
+                    docked={this.state.sidebar_docked}
+                >
+                    {
+                        this.state.sidebar_docked
+                            ?
+                            <> </>
+                            :
+                            <div style={{marginLeft: '1rem', marginTop: '1rem'}}>
+                                <i role='button' onClick={this.toggle_sidebar} class="fas fa-bars fa-lg"></i>
+                            </div>
+                    }
+                </Sidebar>
+            </>
+        )
+    }
+}
+
+class SidebarContent extends Component {
+    on_select = (selected) => {
+        if (selected === 'exit') {
+            history.push('/');
+            return
+        }
+        this.props.toggle();
+        history.push(selected.id);
+    }
+
+    render() {
+        return (
+            <>
+                {
+                    this.props.rooms.map((room, key) => (
+                        <Row role='button' onClick={() => this.on_select(room)} key={key} className={key === 0 ? 'mt-3' : ''}>
+                            <Col md={2}>
+                                <i className={room.name === 'Announcements' ? 'fas fa-bullhorn lg' : 'fas fa-comment fa-lg'} />
+                            </Col>
+                            <Col md={10}>
+                                <p>{room.name}</p>
+                            </Col>
+                        </Row>
+                    ))
+                }
+                <Row role='button' onClick={() => this.on_select('exit')}>
+                    <Col md={2}>
+                        <i className="fas fa-arrow-left fa-lg" />
+                    </Col>
+                    <Col md={10}>
+                        <p>EXIT</p>
+                    </Col>
+                </Row>
             </>
         )
     }
