@@ -4,10 +4,10 @@ import Sidebar from "react-sidebar";
 import '../chat.scss'
 
 import history from '../../../history'
-import { Col, Row } from 'react-bootstrap';
+import { Col, Container, Row } from 'react-bootstrap';
 
 
-const mql = window.matchMedia(`(min-width: 800px)`);
+const mql = window.matchMedia(`(min-width: 1700px)`);
 
 class Rooms extends Component {
     constructor() {
@@ -45,6 +45,7 @@ class Rooms extends Component {
             <>
 
                 <Sidebar
+                    styles={!this.state.sidebar_open ? { 'root': { 'zIndex': '-1' } } : ''}
                     sidebarClassName='bg-white'
                     sidebar={<SidebarContent rooms={this.props.rooms} toggle={this.toggle_sidebar} />}
                     open={this.state.sidebar_open}
@@ -56,7 +57,7 @@ class Rooms extends Component {
                             ?
                             <> </>
                             :
-                            <div style={{marginLeft: '1rem', marginTop: '1rem'}}>
+                            <div style={{position: 'absolute', top: '1rem', left: '1rem'}}>
                                 <i role='button' onClick={this.toggle_sidebar} class="fas fa-bars fa-lg"></i>
                             </div>
                     }
@@ -78,7 +79,7 @@ class SidebarContent extends Component {
 
     render() {
         return (
-            <>
+            <Container>
                 {
                     this.props.rooms.map((room, key) => (
                         <Row role='button' onClick={() => this.on_select(room)} key={key} className={key === 0 ? 'mt-3' : ''}>
@@ -99,7 +100,7 @@ class SidebarContent extends Component {
                         <p>EXIT</p>
                     </Col>
                 </Row>
-            </>
+            </Container>
         )
     }
 }
