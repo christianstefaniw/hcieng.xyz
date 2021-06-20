@@ -1,10 +1,11 @@
 import { Component } from 'react'
 import { Container, Row, Col } from 'react-bootstrap'
+import Sidebar from "react-sidebar";
 
 import Loader from '../../components/loader/loader'
 
 import { websocket } from '../../constants/api_constants'
-import Rooms from './components/rooms'
+import history from '../../history'
 import { Message, room_data, all_rooms, LoadingHelpers, LoadingStatusEnum } from './services'
 import Chat from './components/chat'
 
@@ -12,6 +13,9 @@ import './chat.scss'
 import AccountContext from '../../providers/account_provider'
 
 // TODO refactor all of this
+
+
+const mql = window.matchMedia(`(min-width: 1700px)`);
 
 class ChatPage extends Component {
     static contextType = AccountContext;
@@ -29,11 +33,13 @@ class ChatPage extends Component {
             error: '',
             rooms: [],
             load_overlay: false,
+            sidebar_open: false,
+            sidebar_docked: mql.matches,
         }
     }
 
     reset = () => {
-        if (() => LoadingHelpers.check_rooms_loaded(this.state.loading))
+        if (this.state.ws)
             this.state.ws.close();
         this.setState({ error: '', loading: LoadingHelpers.unload_ws_and_messages() });
         this.num_msg_loaded = 0;
@@ -67,7 +73,7 @@ class ChatPage extends Component {
     connect = async () => {
         let curr_room;
 
-        if (this.state.ws_loaded && this.state.ws)
+        if (this.state.ws)
             this.state.ws.close();
 
         let loaded_rooms = await all_rooms();
@@ -100,12 +106,15 @@ class ChatPage extends Component {
             this.setState({ curr_room });
         }
 
+        ws.onclose = () => {console.log('close')}
+
         this.setState({ curr_room })
         this.setState(prev_state => ({ loading: LoadingHelpers.messages_loaded(prev_state.loading) }))
 
     }
 
     async componentDidMount() {
+        mql.addEventListener('', this.media_query_changed)
         await this.connect();
     }
 
@@ -114,6 +123,14 @@ class ChatPage extends Component {
             this.reset();
             await this.connect();
         }
+    }
+
+    media_query_changed = () => {
+        this.setState({ sidebar_docked: mql.matches, sidebar_open: false })
+    }
+
+    toggle_sidebar = () => {
+        this.setState(prev_state => ({ sidebar_open: !prev_state.sidebar_open }))
     }
 
     handle_input_change = (evt) => {
@@ -134,64 +151,112 @@ class ChatPage extends Component {
         this.setState({ curr_msg: '' });
     }
 
-    handle_enter_input = (evt) => {
-        if (evt.key === 'Enter') {
-            this.send_message();
-        }
-    }
-
     componentWillUnmount() {
         this.reset();
+        mql.removeEventListener('', this.media_query_changed)
     }
 
     render() {
         return (
             <>
-                <Container className='m-auto mt-5'>
-                    <Loader show={this.state.load_overlay} />
-                    {
-                        LoadingHelpers.check_rooms_loaded(this.state.loading) ? <Rooms rooms={this.state.rooms} /> : <></>
-                    }
-                    {
-                        !LoadingHelpers.fully_loaded(this.state.loading)
-                            ?
-                            <Loader show={() => !LoadingHelpers.fully_loaded(this.state.loading)} />
-                            :
-                            <>
-                                <Container className='chat'>
-                                    <Chat
-                                        id={this.props.match.params.id}
-                                        error={this.state.error}
-                                        curr_room={this.state.curr_room} update_room_messages={this.update_room_messages}
-                                    />
-                                    {
-                                        this.state.error ? <> </> :
-                                            this.state.curr_room.admin_text_only && !this.context.account_info.is_admin
-                                                ?
-                                                <>You do not have permissions to text in this room</>
-                                                :
-                                                <Row className='justify-content-around'>
-                                                    <Col xs={9}>
-                                                        <textarea
-                                                            className='message-type'
-                                                            placeholder='message'
-                                                            value={this.state.curr_msg} name='curr_msg' type='text'
-                                                            onKeyPress={this.handle_enter_input} onChange={this.handle_input_change} required
-                                                        />
-                                                    </Col>
-                                                    <Col xs={3}>
-                                                        <i onClick={this.send_message} className="fa fa-paper-plane fa-lg v-center send-icon"></i>
-                                                    </Col>
-                                                </Row>
+                <Loader show={this.state.load_overlay} />
+                <Sidebar
+                    sidebarClassName='bg-white'
+                    sidebar={<SidebarContent rooms={this.state.rooms} toggle={this.toggle_sidebar} />}
+                    open={this.state.sidebar_open}
+                    onSetOpen={this.toggle_sidebar}
+                    docked={this.state.sidebar_docked}
+                >
+                    <>
+                        {
+                            this.state.sidebar_docked
+                                ?
+                                <> </>
+                                :
+                                <div>
+                                    <i role='button' onClick={this.toggle_sidebar} class="fas fa-bars fa-lg"></i>
+                                </div>
+                        }
+                        {
+                            !LoadingHelpers.fully_loaded(this.state.loading)
+                                ?
+                                <Loader show={() => !LoadingHelpers.fully_loaded(this.state.loading)} />
+                                :
+                                <>
+                                    <Container className='chat'>
+                                        <Chat
+                                            id={this.props.match.params.id}
+                                            error={this.state.error}
+                                            curr_room={this.state.curr_room} update_room_messages={this.update_room_messages}
+                                        />
+                                        {
+                                            this.state.error ? <> </> :
+                                                this.state.curr_room.admin_text_only && !this.context.account_info.is_admin
+                                                    ?
+                                                    <>You do not have permissions to text in this room</>
+                                                    :
+                                                    <Row className='justify-content-around'>
+                                                        <Col xs={9}>
+                                                            <textarea
+                                                                className='message-type'
+                                                                placeholder='message'
+                                                                value={this.state.curr_msg} name='curr_msg' type='text'
+                                                                onChange={this.handle_input_change} required
+                                                            />
+                                                        </Col>
+                                                        <Col xs={3}>
+                                                            <i onClick={this.send_message} className="fa fa-paper-plane fa-lg v-center send-icon"></i>
+                                                        </Col>
+                                                    </Row>
 
-                                    }
-                                </Container>
-                            </>
-                    }
-
-                </Container>
+                                        }
+                                    </Container>
+                                </>
+                        }
+                    </>
+                </Sidebar>
             </>
 
+
+        )
+    }
+}
+
+
+class SidebarContent extends Component {
+    on_select = (selected) => {
+        if (selected === 'exit') {
+            history.push('/');
+            return
+        }
+        this.props.toggle();
+        history.push(selected.id);
+    }
+
+    render() {
+        return (
+            <Container>
+                {
+                    this.props.rooms.map((room, key) => (
+                        <Row role='button' onClick={() => this.on_select(room)} key={key} className={key === 0 ? 'mt-3' : ''}>
+                            <Col md={2}>
+                                <i className={room.name === 'Announcements' ? 'fas fa-bullhorn lg' : 'fas fa-comment fa-lg'} />
+                            </Col>
+                            <Col md={10}>
+                                <p>{room.name}</p>
+                            </Col>
+                        </Row>
+                    ))
+                }
+                <Row role='button' onClick={() => this.on_select('exit')}>
+                    <Col md={2}>
+                        <i className="fas fa-arrow-left fa-lg" />
+                    </Col>
+                    <Col md={10}>
+                        <p>EXIT</p>
+                    </Col>
+                </Row>
+            </Container>
         )
     }
 }

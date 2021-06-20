@@ -6,7 +6,7 @@ import '../chat.scss'
 const colors = ['#DDD8D8', '#C1AEA8', '#FFA564', '#FFE2C8', '#FFA64D'];
 
 class Message extends Component {
-    shouldComponentUpdate(prevProps) {
+    shouldComponentUpdate() {
         return false;
     }
 

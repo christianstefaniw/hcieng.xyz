@@ -6,13 +6,6 @@
     @include neumorph-input();
 }
 
-.sidebar{
-    position: fixed !important;
-    overflow-y: auto;
-    overflow-x: hidden !important;
-    background-color: $primary !important;
-}
-
 .send-icon{
     padding: 1.5rem 2rem;
     border-radius: 50%;
@@ -27,6 +20,16 @@
     overflow-y: scroll;
     padding-top: 1rem;
     height: 100%;
+}
+
+.message-icon {
+    user-select: none;
+    border-radius: 50%;
+    height: 3rem;
+    width: 3rem;
+    padding-top: 0.6rem;
+    box-shadow: $outer-shadow;
+    text-align: center;
 }
 
 .message {
