@@ -106,7 +106,7 @@ class ChatPage extends Component {
             this.setState({ curr_room });
         }
 
-        ws.onclose = () => {console.log('close')}
+        ws.onclose = () => { console.log('close') }
 
         this.setState({ curr_room })
         this.setState(prev_state => ({ loading: LoadingHelpers.messages_loaded(prev_state.loading) }))
@@ -160,61 +160,67 @@ class ChatPage extends Component {
         return (
             <>
                 <Loader show={this.state.load_overlay} />
-                <Sidebar
-                    sidebarClassName='bg-white'
-                    sidebar={<SidebarContent rooms={this.state.rooms} toggle={this.toggle_sidebar} />}
-                    open={this.state.sidebar_open}
-                    onSetOpen={this.toggle_sidebar}
-                    docked={this.state.sidebar_docked}
-                >
-                    <>
-                        {
-                            this.state.sidebar_docked
-                                ?
-                                <> </>
-                                :
-                                <div>
-                                    <i role='button' onClick={this.toggle_sidebar} class="fas fa-bars fa-lg"></i>
-                                </div>
-                        }
-                        {
-                            !LoadingHelpers.fully_loaded(this.state.loading)
-                                ?
-                                <Loader show={() => !LoadingHelpers.fully_loaded(this.state.loading)} />
-                                :
-                                <>
-                                    <Container className='chat'>
-                                        <Chat
-                                            id={this.props.match.params.id}
-                                            error={this.state.error}
-                                            curr_room={this.state.curr_room} update_room_messages={this.update_room_messages}
-                                        />
-                                        {
-                                            this.state.error ? <> </> :
-                                                this.state.curr_room.admin_text_only && !this.context.account_info.is_admin
-                                                    ?
-                                                    <>You do not have permissions to text in this room</>
-                                                    :
-                                                    <Row className='justify-content-around'>
-                                                        <Col xs={9}>
-                                                            <textarea
-                                                                className='message-type'
-                                                                placeholder='message'
-                                                                value={this.state.curr_msg} name='curr_msg' type='text'
-                                                                onChange={this.handle_input_change} required
-                                                            />
-                                                        </Col>
-                                                        <Col xs={3}>
-                                                            <i onClick={this.send_message} className="fa fa-paper-plane fa-lg v-center send-icon"></i>
-                                                        </Col>
-                                                    </Row>
+                {
 
-                                        }
-                                    </Container>
-                                </>
-                        }
-                    </>
-                </Sidebar>
+                    LoadingHelpers.check_rooms_loaded(this.state.loading) ?
+                        <Sidebar
+                            sidebarClassName='bg-white'
+                            sidebar={<SidebarContent rooms={this.state.rooms} toggle={this.toggle_sidebar} />}
+                            open={this.state.sidebar_open}
+                            onSetOpen={this.toggle_sidebar}
+                            docked={this.state.sidebar_docked}
+                        >
+                            <>
+                                {
+                                    this.state.sidebar_docked
+                                        ?
+                                        <> </>
+                                        :
+                                        <div>
+                                            <i role='button' onClick={this.toggle_sidebar} class="fas fa-bars fa-lg"></i>
+                                        </div>
+                                }
+                                {
+                                    !LoadingHelpers.fully_loaded(this.state.loading)
+                                        ?
+                                        <Loader show={() => !LoadingHelpers.fully_loaded(this.state.loading)} />
+                                        :
+                                        <>
+                                            <Container className='chat'>
+                                                <Chat
+                                                    id={this.props.match.params.id}
+                                                    error={this.state.error}
+                                                    curr_room={this.state.curr_room} update_room_messages={this.update_room_messages}
+                                                />
+                                                {
+                                                    this.state.error ? <> </> :
+                                                        this.state.curr_room.admin_text_only && !this.context.account_info.is_admin
+                                                            ?
+                                                            <>You do not have permissions to text in this room</>
+                                                            :
+                                                            <Row className='justify-content-around'>
+                                                                <Col xs={9}>
+                                                                    <textarea
+                                                                        className='message-type'
+                                                                        placeholder='message'
+                                                                        value={this.state.curr_msg} name='curr_msg' type='text'
+                                                                        onChange={this.handle_input_change} required
+                                                                    />
+                                                                </Col>
+                                                                <Col xs={3}>
+                                                                    <i onClick={this.send_message} className="fa fa-paper-plane fa-lg v-center send-icon"></i>
+                                                                </Col>
+                                                            </Row>
+
+                                                }
+                                            </Container>
+                                        </>
+                                }
+                            </>
+                        </Sidebar>
+                        :
+                        <></>
+                }
             </>
 
 
