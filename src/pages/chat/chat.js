@@ -35,6 +35,7 @@ class ChatPage extends Component {
             load_overlay: false,
             sidebar_open: false,
             sidebar_docked: mql.matches,
+            first_load: true
         }
     }
 
@@ -156,13 +157,28 @@ class ChatPage extends Component {
         mql.removeEventListener('', this.media_query_changed)
     }
 
+    rooms_load = () => {
+        if (this.state.first_load)
+            return LoadingHelpers.fully_loaded(this.state.loading)
+        return LoadingHelpers.check_rooms_loaded(this.state.loading)
+    }
+
+    chat_load = () => {
+        if (this.state.first_load) {
+            this.setState({ first_load: false });
+            return false;
+        }
+        return !LoadingHelpers.fully_loaded(this.state.loading)
+    }
+
     render() {
         return (
             <>
                 <Loader show={this.state.load_overlay} />
                 {
 
-                    LoadingHelpers.check_rooms_loaded(this.state.loading) ?
+                    (() => { return this.rooms_load() })()
+                        ?
                         <Sidebar
                             sidebarClassName='bg-white'
                             sidebar={<SidebarContent rooms={this.state.rooms} toggle={this.toggle_sidebar} />}
@@ -181,9 +197,9 @@ class ChatPage extends Component {
                                         </div>
                                 }
                                 {
-                                    !LoadingHelpers.fully_loaded(this.state.loading)
+                                    (() => { return this.chat_load() })()
                                         ?
-                                        <Loader show={() => !LoadingHelpers.fully_loaded(this.state.loading)} />
+                                        <Loader show={(() => { return this.chat_load() })()} />
                                         :
                                         <>
                                             <Container className='chat'>
@@ -219,7 +235,7 @@ class ChatPage extends Component {
                             </>
                         </Sidebar>
                         :
-                        <></>
+                        <Loader show={(() => { return this.rooms_load() })()} />
                 }
             </>
 
