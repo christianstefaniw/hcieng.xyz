@@ -15,14 +15,14 @@ class Message extends Component {
         return (
             <Row className='message'>
                 <Col lg={1}>
-                    <div className='message-icon' style={{backgroundColor: colors[Math.floor(Math.random()*colors.length)]}}>
+                    <div className='message-icon' style={{ backgroundColor: colors[Math.floor(Math.random() * colors.length)] }}>
                         <h4>{this.props.msg.sender.first[0].toUpperCase()}</h4>
                     </div>
                 </Col>
                 <Col lg={11}>
                     <div>
                         <p className='text-muted mb-0'>{this.props.msg.sender.first}</p>
-                        <p>{this.props.msg.content}</p>
+                        <p dangerouslySetInnerHTML={{ __html: this.props.msg.content} } />
                     </div>
                 </Col>
             </Row>
