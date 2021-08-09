@@ -20,7 +20,7 @@ class Contact extends React.Component {
             message: '',
             loading: false,
             email_sent: false,
-            error: '',
+            form_errors: '',
         }
         this.recaptchaRef = React.createRef();
     }
@@ -40,7 +40,7 @@ class Contact extends React.Component {
     reset_state = () => {
         this.setState({
             email_sent: false,
-            error: '',
+            form_errors: '',
         })
     }
 
@@ -66,7 +66,7 @@ class Contact extends React.Component {
         const recaptcha_valid = Boolean(this.recaptchaRef.current.getValue())
         if (!recaptcha_valid)
             this.setState({
-                error: 'invalid recaptcha',
+                form_errors: { general_error: 'invalid recaptcha' },
             });
         return recaptcha_valid;
     }
@@ -84,18 +84,19 @@ class Contact extends React.Component {
     }
 
     handle_email_error = (error) => {
-        if (error.data)
+        console.log(error.status)
+        if (error.status === 400 && error.data)
             this.setState({
-                error: error.data,
+                form_errors: error.data,
             })
         else
             this.setState({
-                error: 'failed to send email',
+                form_errors: { general_error: 'failed to send email' },
             })
     }
 
     render() {
-        const { email_sent, loading, error, name, from_email, message } = this.state;
+        const { email_sent, loading, form_errors, name, from_email, message } = this.state;
         return (
             <>
                 <Loader show={loading} variant='secondary' />
@@ -116,15 +117,17 @@ class Contact extends React.Component {
                                     placeholder='Name' name='name'
                                     className='contact-input' required
                                 />
+                                <span className='text-danger'>{form_errors['name']}</span>
                             </Form.Group>
 
-                            <Form.Group>
+                            <Form.Group className='my-4'>
                                 <Form.Control
                                     onChange={this.handle_change} placeholder='Email'
                                     value={from_email}
                                     name='from_email' type='email'
-                                    className='contact-input my-4' required
+                                    className='contact-input' required
                                 />
+                                <span className='text-danger'>{form_errors['email']}</span>
                             </Form.Group>
 
                             <div className='mb-4'>
@@ -138,7 +141,11 @@ class Contact extends React.Component {
                                 </Form.Group>
                             </div>
 
-                            {email_sent ? <p className='text-success text-center mb-2'>Sent!</p> : <p className='text-danger text-center mb-2'>{error}</p>}
+                            <div className='mb-2'>
+                                {email_sent ? <p className='text-success text-center'>Sent!</p> : <></>}
+                                <p className='text-danger text-center'>{form_errors['general_error']}</p>
+                            </div>
+
 
                             <div className='d-flex justify-content-center'>
                                 <ReCaptcha
