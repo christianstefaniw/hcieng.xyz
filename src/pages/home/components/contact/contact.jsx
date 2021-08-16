@@ -20,7 +20,7 @@ class Contact extends React.Component {
             message: '',
             loading: false,
             email_sent: false,
-            form_errors: '',
+            errors: {},
         }
         this.recaptchaRef = React.createRef();
     }
@@ -40,7 +40,7 @@ class Contact extends React.Component {
     reset_state = () => {
         this.setState({
             email_sent: false,
-            form_errors: '',
+            errors: {},
         })
     }
 
@@ -54,26 +54,15 @@ class Contact extends React.Component {
     handle_submit = async (evt) => {
         evt.preventDefault();
         this.reset_state();
-        if (!this.validate_recaptcha())
-            return;
         this.start_loading();
         await this.send_email();
+        this.resetRecaptcha();
         this.stop_loading();
-
-    }
-
-    validate_recaptcha = () => {
-        const recaptcha_valid = Boolean(this.recaptchaRef.current.getValue())
-        if (!recaptcha_valid)
-            this.setState({
-                form_errors: { general_error: 'invalid recaptcha' },
-            });
-        return recaptcha_valid;
     }
 
     send_email = async () => {
         const { name, from_email, message } = this.state;
-        const result = await email(name, from_email, message);
+        const result = await email(name, from_email, message, this.recaptchaRef.current.getValue());
         if (result.error)
             this.handle_email_error(result.error);
         else
@@ -83,20 +72,27 @@ class Contact extends React.Component {
 
     }
 
-    handle_email_error = (error) => {
-        console.log(error.status)
-        if (error.status === 400 && error.data)
+    handle_email_error = (errorResponse) => {
+        if (this.errorResponseHasMoreInfo(errorResponse))
             this.setState({
-                form_errors: error.data,
+                errors: errorResponse.data['errors'],
             })
         else
             this.setState({
-                form_errors: { general_error: 'failed to send email' },
+                errors: { error: 'failed to send email' },
             })
     }
 
+    errorResponseHasMoreInfo = (errorResponse) => {
+        return errorResponse.status === 400 && errorResponse.data['errors']
+    }
+
+    resetRecaptcha = () => {
+        window.grecaptcha.reset();
+    }
+
     render() {
-        const { email_sent, loading, form_errors, name, from_email, message } = this.state;
+        const { email_sent, loading, errors, name, from_email, message } = this.state;
         return (
             <>
                 <Loader show={loading} variant='secondary' />
@@ -117,7 +113,7 @@ class Contact extends React.Component {
                                     placeholder='Name' name='name'
                                     className='contact-input' required
                                 />
-                                <span className='text-danger'>{form_errors['name']}</span>
+                                <span className='text-danger'>{errors['name']}</span>
                             </Form.Group>
 
                             <Form.Group className='my-4'>
@@ -127,7 +123,7 @@ class Contact extends React.Component {
                                     name='from_email' type='email'
                                     className='contact-input' required
                                 />
-                                <span className='text-danger'>{form_errors['email']}</span>
+                                <span className='text-danger'>{errors['email']}</span>
                             </Form.Group>
 
                             <div className='mb-4'>
@@ -143,21 +139,20 @@ class Contact extends React.Component {
 
                             <div className='mb-2'>
                                 {email_sent ? <p className='text-success text-center'>Sent!</p> : <></>}
-                                <p className='text-danger text-center'>{form_errors['general_error']}</p>
                             </div>
 
-
-                            <div className='d-flex justify-content-center'>
-                                <ReCaptcha
-                                    className='mb-4'
-                                    sitekey='6LeVaOsbAAAAALI_K5hwv7t0Bf1PbfDkshHgSeAH'
-                                    ref={this.recaptchaRef}
-                                />
+                            <div className='mb-4'>
+                                <div className='d-flex justify-content-center'>
+                                    <ReCaptcha
+                                        sitekey='6LeVaOsbAAAAALI_K5hwv7t0Bf1PbfDkshHgSeAH'
+                                        ref={this.recaptchaRef}
+                                    />
+                                </div>
+                                <p className='text-danger text-center'>{errors['recaptcha']}</p>
                             </div>
-
 
                             <Button isButton={true} primary={true} className='w-100 outer-shadow'>Send</Button>
-
+                            <p className='text-danger text-center'>{errors['error']}</p>
                         </form>
                     </Col>
                 </Row>
