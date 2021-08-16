@@ -22,7 +22,7 @@ class Contact extends React.Component {
             email_sent: false,
             errors: {},
         }
-        this.recaptchaRef = React.createRef();
+        this.recaptcha_ref = React.createRef();
     }
 
     start_loading = () => {
@@ -56,13 +56,13 @@ class Contact extends React.Component {
         this.reset_state();
         this.start_loading();
         await this.send_email();
-        this.resetRecaptcha();
+        this.reset_recaptcha();
         this.stop_loading();
     }
 
     send_email = async () => {
         const { name, from_email, message } = this.state;
-        const result = await email(name, from_email, message, this.recaptchaRef.current.getValue());
+        const result = await email(name, from_email, message, this.recaptcha_ref.current.getValue());
         if (result.error)
             this.handle_email_error(result.error);
         else
@@ -72,10 +72,10 @@ class Contact extends React.Component {
 
     }
 
-    handle_email_error = (errorResponse) => {
-        if (this.errorResponseHasMoreInfo(errorResponse))
+    handle_email_error = (error_response) => {
+        if (this.error_response_has_more_info(error_response))
             this.setState({
-                errors: errorResponse.data['errors'],
+                errors: error_response.data['errors'],
             })
         else
             this.setState({
@@ -83,11 +83,11 @@ class Contact extends React.Component {
             })
     }
 
-    errorResponseHasMoreInfo = (errorResponse) => {
-        return errorResponse.status === 400 && errorResponse.data['errors']
+    error_response_has_more_info = (error_response) => {
+        return error_response.status === 400 && error_response.data['errors']
     }
 
-    resetRecaptcha = () => {
+    reset_recaptcha = () => {
         window.grecaptcha.reset();
     }
 
@@ -137,15 +137,11 @@ class Contact extends React.Component {
                                 </Form.Group>
                             </div>
 
-                            <div className='mb-2'>
-                                {email_sent ? <p className='text-success text-center'>Sent!</p> : <></>}
-                            </div>
-
                             <div className='mb-4'>
                                 <div className='d-flex justify-content-center'>
                                     <ReCaptcha
                                         sitekey='6LeVaOsbAAAAALI_K5hwv7t0Bf1PbfDkshHgSeAH'
-                                        ref={this.recaptchaRef}
+                                        ref={this.recaptcha_ref}
                                     />
                                 </div>
                                 <p className='text-danger text-center'>{errors['recaptcha']}</p>
@@ -153,6 +149,9 @@ class Contact extends React.Component {
 
                             <Button isButton={true} primary={true} className='w-100 outer-shadow'>Send</Button>
                             <p className='text-danger text-center'>{errors['error']}</p>
+                            <div className='mt-2'>
+                                {email_sent ? <p className='text-success text-center'>Sent!</p> : <></>}
+                            </div>
                         </form>
                     </Col>
                 </Row>
