@@ -12,7 +12,7 @@ import christian from '../../../../assets/execs/christian.jpg'
 export default function Execs() {
     return (
         <>
-            <Title title='Executives' subtitle='Meet the team!' />
+            <Title title='Executives' subtitle='Meet the team!' mb='1.8rem' />
             <Row className='justify-content-around'>
                 <Col className='mb-4' lg={3}>
                     <ExecCard
