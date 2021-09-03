@@ -1,15 +1,15 @@
 @import '../../../../sass/variables';
 @import '../../../../sass/mixins';
 
-@keyframes sidetoside {
-    0% { margin-left: -1.2rem;}
-    50%{ margin-left: 4rem;}
-    100%{ margin-left: -1.2rem;}
+@keyframes fade-in-out {
+    0%, 100% { opacity: 0;}
+    50%{ opacity: 1;}
 }
 
-.sidetoside {
-    animation: sidetoside 4s backwards infinite;
+.fade-in-out {
+    animation: fade-in-out 4s infinite;
 }
+
 
 .contact-form {
     input {
