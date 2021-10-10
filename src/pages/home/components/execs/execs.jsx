@@ -35,7 +35,7 @@ export default function Execs() {
                         img={christian}
                         role='Co-President'
                         name='Christian Stefaniw'
-                        content='Christian is a senior at HCI. He is very interested in computer programming. Christian hopes to achieve a computer science degree from McGill.'
+                        content='Christian is a senior at HCI. He is very interested in computer programming. Christian hopes to achieve a computer science degree.'
                     />
                 </Col>
             </Row>
