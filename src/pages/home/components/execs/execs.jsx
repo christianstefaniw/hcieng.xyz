@@ -33,7 +33,7 @@ export default function Execs() {
                 <Col className='mb-4' lg={3}>
                     <ExecCard
                         img={christian}
-                        role='Co-President'
+                        role='President'
                         name='Christian Stefaniw'
                         content='Christian is a senior at HCI. He is very interested in computer programming and entrepreneurship. Christian hopes to achieve a computer science degree or a business degree.'
                     />
